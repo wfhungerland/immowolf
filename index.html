@@ -598,6 +598,16 @@ function lauf(p, wertPct, depotPct){
           ueberschuss, ekKnapp, ende:reihe[reihe.length-1]};
 }
 
+/* Ab wann liegt Kaufen vorn, und bleibt es das bis zum Ende? Die Kurve kann
+   kippen und zurückkippen, etwa wenn das Depot schneller wächst als der
+   Wohnwert. Gezählt wird nur ein Vorsprung, der bis zum letzten Jahr hält. */
+function kipp(reihe){
+  let dauerhaft=null;
+  for(let i=reihe.length-1;i>=0 && reihe[i].kaeufer>=reihe[i].mieter;i--) dauerhaft=reihe[i];
+  const vorn=reihe.filter(z=>z.kaeufer>=z.mieter && (!dauerhaft || z.j<dauerhaft.j));
+  return {dauerhaft, zeitweise: vorn.length ? [vorn[0].j, vorn[vorn.length-1].j] : null};
+}
+
 function schwelle(p){
   const f = w => { const r=lauf(p,w).ende; return r.kaeufer-r.mieter; };
   let lo=-12, hi=25;
@@ -812,7 +822,7 @@ function blatt(zeilen, breiten){
 }
 function excel(){
   const r=lauf(P,P.wert), sw=schwelle(P), jahre=Math.round(P.jahre);
-  const vornAb=r.reihe.find(z=>z.kaeufer>=z.mieter);
+  const kp0=kipp(r.reihe), vornAb=kp0.dauerhaft;
   const eck=[["Lohnt sich ein Immobilienkauf?"],
              ["Rechenstand", new Date().toLocaleDateString("de-DE")],[],
              ["Eingabe","Wert","Einheit","Startwert","Herkunft"]];
@@ -831,7 +841,8 @@ function excel(){
     ["Vermoegen Kaufen am Ende", r.ende.kaeufer, "Euro"],
     ["Vermoegen Mieten und Sparen am Ende", r.ende.mieter, "Euro"],
     ["Kaufen minus mieten", r.ende.kaeufer-r.ende.mieter, "Euro"],
-    ["Der Kauf zahlt sich aus ab Jahr", vornAb?vornAb.j:"gar nicht", ""],
+    ["Der Kauf zahlt sich dauerhaft aus ab Jahr", vornAb?vornAb.j:"gar nicht", ""],
+    ["Kaufen nur zeitweise vorn", kp0.zeitweise?"Jahr "+kp0.zeitweise[0]+" bis "+kp0.zeitweise[1]:"nein", ""],
     ["Noetige Wertsteigerung fuer Gleichstand",
       sw.lage==="ok"?Math.round(sw.wert*100)/100:(sw.lage==="unter"?"keine noetig":"ueber 25"), "Prozent je Jahr"],
     ["Restschuld am Ende", r.ende.rest, "Euro"],
@@ -980,16 +991,20 @@ function rechne(){
     ". Gerechnet ist das mit "+nf(P.wert,1)+" % Wertsteigerung im Jahr und "+nf(P.depot,1)+" % Depotrendite.";
 
   const nebenMonat = r.reihe[0].neben/12;
-  const vornAb = r.reihe.find(z=>z.kaeufer>=z.mieter);
+  const kp = kipp(r.reihe), vornAb = kp.dauerhaft;
+  const zw = kp.zeitweise ? (kp.zeitweise[0]===kp.zeitweise[1]
+    ? "in Jahr "+kp.zeitweise[0] : "von Jahr "+kp.zeitweise[0]+" bis "+kp.zeitweise[1]) : null;
   const wertEnde = e.wert*d0;
   const pufferRoh = Math.abs(diff)/Math.max(0.01,1-P.verkauf/100);
   const puffer = wertEnde>0 ? (diff>=0?1:-1)*pufferRoh/wertEnde*100 : 0;
   const pufferGreifbar = Math.abs(puffer) <= 50;
 
   let kippWert, kippKlein;
-  if(!vornAb){ kippWert = "gar nicht"; kippKlein = "in diesen "+jahre+" Jahren bringt mieten und anlegen in jedem Jahr mehr"; }
+  if(!vornAb && !zw){ kippWert = "gar nicht"; kippKlein = "in diesen "+jahre+" Jahren bringt mieten und anlegen in jedem Jahr mehr"; }
+  else if(!vornAb){ kippWert = "nicht dauerhaft"; kippKlein = "Kaufen liegt nur "+zw+" vorn, danach zieht das Depot wieder vorbei und bleibt bis zum Ende vorn"; }
   else if(vornAb.j===1){ kippWert = "sofort"; kippKlein = "schon nach einem Jahr bringt Kaufen mehr, und das bleibt so"; }
-  else { kippWert = "ab Jahr "+vornAb.j; kippKlein = "also "+(JETZT+vornAb.j)+"; wer vorher verkauft, hätte mit mieten und anlegen mehr"; }
+  else { kippWert = "ab Jahr "+vornAb.j; kippKlein = "also "+(JETZT+vornAb.j)+" und von da an bis zum Ende; wer vorher verkauft, hätte mit mieten und anlegen mehr"+
+    (zw ? ". Schon "+zw+" lag Kaufen kurz vorn, fiel dann aber zurück" : ""); }
 
   document.getElementById("vier").innerHTML =
     '<div><dt>Kaufen kostet im ersten Jahr</dt><dd>'+eur(monatKauf)+' im Monat'+

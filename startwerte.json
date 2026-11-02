@@ -13,7 +13,7 @@
     "depot": 5
   },
   "herkunft": {
-    "zins": "Startwert 4,1 %: Durchschnitt der deutschen Banken für Wohnungsbaukredite mit über zehn Jahren Zinsbindung, MFI-Zinsstatistik der Deutschen Bundesbank, Stand 2026-09.",
+    "zins": "Startwert 4,1 %: Durchschnitt der deutschen Banken für Wohnungsbaukredite mit über zehn Jahren Zinsbindung, MFI-Zinsstatistik der Deutschen Bundesbank, Stand 09.2026.",
     "zins2": "Startwert 4,1 %: wie der erste Zins, der Rechner unterstellt also von sich aus keine Wende.",
     "preisQm": "Startwert 5.929 €: Berliner Altbau im Mittel, IBB Wohnungsmarktbericht 2025.",
     "mieteQm": "Startwert 15,78 € je Quadratmeter: Berliner Angebotsmiete, IBB Wohnungsmarktbericht 2025.",

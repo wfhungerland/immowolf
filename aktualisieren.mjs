@@ -91,7 +91,7 @@ try {
     datei.werte.zins2 = gerundet;
     datei.herkunft.zins =
       `Startwert ${deutsch(gerundet)} %: Durchschnitt der deutschen Banken für Wohnungsbaukredite ` +
-      `mit über zehn Jahren Zinsbindung, MFI-Zinsstatistik der Deutschen Bundesbank, Stand ${datum}.`;
+      `mit über zehn Jahren Zinsbindung, MFI-Zinsstatistik der Deutschen Bundesbank, Stand ${datum.replace(/^(\d{4})-(\d{2}).*/, "$2.$1")}.`;
     datei.herkunft.zins2 =
       `Startwert ${deutsch(gerundet)} %: wie der erste Zins, der Rechner unterstellt also von sich aus keine Wende.`;
     const q = datei.quellen.find(q => q.feld === "zins");

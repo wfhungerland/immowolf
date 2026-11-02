@@ -6,11 +6,11 @@
     "zins2": 4.2,
     "preisQm": 5929,
     "mieteQm": 15.78,
-    "infl": 2.0,
-    "nebenSteig": 2.0,
+    "infl": 2,
+    "nebenSteig": 2,
     "basiszins": 2.5,
-    "wert": 3.0,
-    "depot": 5.0
+    "wert": 3,
+    "depot": 5
   },
   "herkunft": {
     "zins": "Startwert 4,2 %: Durchschnitt der deutschen Banken für Wohnungsbaukredite mit über zehn Jahren Zinsbindung, MFI-Zinsstatistik der Deutschen Bundesbank, Stand 09.2026.",

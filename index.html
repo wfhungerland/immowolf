@@ -223,6 +223,13 @@ footer p{margin:0 0 .6em}
       <p class="marke">Schritt 1 von 4</p>
       <h2>Deine Lage</h2>
       <p class="untertitel"><b>Jedes blau umrandete Feld ist ein Eingabefeld.</b> Antippen, eigene Zahl eintippen, fertig. Einheiten darfst du mitschreiben, „72 m²", „1.900 €" oder „2,5 %" landen alle richtig. Wer lieber schiebt, nimmt den Regler darunter. Das Fragezeichen erklärt, woher der Startwert kommt.</p>
+      <div class="mietwahl">
+        <span class="wahl" role="group" aria-label="Wie gibst du den Preis an">
+          <button type="button" id="preisQmWahl" aria-pressed="true">Preis je Quadratmeter</button>
+          <button type="button" id="preisGesamtWahl" aria-pressed="false">Kaufpreis gesamt</button>
+        </span>
+        <p id="preisText"></p>
+      </div>
       <div id="kern" class="gruppe"></div>
       <div class="mietwahl">
         <span class="wahl" role="group" aria-label="Welche Miete gilt">
@@ -428,6 +435,13 @@ const MIETE = {
   std:()=>STD.mieteQm*STD.qm
 };
 
+/* Der Kaufpreis ist ebenfalls abgeleitet: Fläche mal Preis je Quadratmeter. */
+const KAUFPREIS = {
+  get:()=>P.preisQm*P.qm,
+  set:v=>{ P.preisQm = v/Math.max(1,P.qm); if(PREISBEZUG==="gesamt") kaufpreisFix = v; },
+  std:()=>STD.preisQm*STD.qm
+};
+
 const FELDER = [
   {k:"ek",      g:"kern", t:"Geld, das du einsetzen kannst", e:"€",    min:0,  max:400000,s:1000, f:0, live:true,
    h:"Alles, was du für den Kauf flüssig hast, nach Abzug deiner Notfallreserve. Daraus zahlst du zuerst Kaufnebenkosten und Renovierung, der Rest mindert den Kredit. Auf dem anderen Weg wandert genau dieselbe Summe ins Depot, sonst wäre der Vergleich schief.",
@@ -438,6 +452,9 @@ const FELDER = [
   {k:"preisQm", g:"kern", t:"Preis je Quadratmeter",      e:"€",     min:1500,max:12000,s:50,   f:0,
    h:"Was der Quadratmeter in deiner Wunschgegend kostet. Schau in zwei, drei Inserate.",
    q:"Startwert 5.929 €: Berliner Altbau im Mittel, IBB Wohnungsmarktbericht 2025."},
+  {k:"kaufpreis", g:"kern", t:"Kaufpreis",                  e:"€",     min:30000,max:2000000,s:1000, f:0, virt:KAUFPREIS, live:true,
+   h:"Der Preis aus dem Inserat oder dem Angebot, ohne Nebenkosten. Zusammen mit der Wohnfläche ergibt er den Preis je Quadratmeter. Änderst du die Fläche, bleibt dieser Kaufpreis stehen.",
+   q:"Startwert 415.030 €: 70 m² zu 5.929 € je Quadratmeter, Berliner Altbau im Mittel, IBB Wohnungsmarktbericht 2025."},
   {k:"mieteMon",g:"kern", t:"Deine Miete auf dem anderen Weg", e:"€/Monat",min:200,max:6000, s:10,  f:0, virt:MIETE, live:true,
    h:"Trag die Miete ein, die deine echte Alternative ist. Willst du eine vergleichbare Wohnung neu anmieten, nimm die Marktmiete; dann wächst der Betrag mit der Fläche mit. Willst du dagegen in deiner jetzigen Wohnung bleiben, nimm genau deine heutige Kaltmiete, auch wenn sie günstig ist; dann bleibt sie von der Fläche unberührt. Beide Fragen sind berechtigt, sie führen nur zu verschiedenen Antworten.",
    q:"Startwert 1.105 €: 70 m² zur Berliner Angebotsmiete von 15,78 € je Quadratmeter, IBB Wohnungsmarktbericht 2025."},
@@ -506,6 +523,8 @@ const FELDER = [
 let MODUS = "real";
 let MIETBEZUG = "neu";   /* neu = Marktmiete, waechst mit der Flaeche; bleiben = fester Monatsbetrag */
 let mieteFix = null;
+let PREISBEZUG = "qm";   /* qm = Preis je Quadratmeter, gesamt = fester Kaufpreis */
+let kaufpreisFix = null;
 const hol = f => f.virt ? f.virt.get() : P[f.k];
 const leg = (f,v) => { if(f.virt) f.virt.set(v); else P[f.k]=v; };
 const startwert = f => f.virt ? f.virt.std() : STD[f.k];
@@ -689,6 +708,7 @@ function setze(f,v){
 
 function allesZurueck(){
   Object.assign(P, STD);
+  if(PREISBEZUG==="gesamt") kaufpreisFix = KAUFPREIS.get();
   for(const f of FELDER) f.beruehrt=false;
   for(const f of FELDER){
     document.getElementById("r_"+f.k).value=hol(f);
@@ -899,6 +919,8 @@ const JETZT = new Date().getFullYear();
 function rechne(){
   /* Bleibt der Nutzer in seiner Wohnung, hält der Monatsbetrag, nicht der Preis je Quadratmeter. */
   if(MIETBEZUG==="bleiben" && mieteFix!==null) P.mieteQm = mieteFix/Math.max(1,P.qm);
+  /* Gibt der Nutzer den Kaufpreis vor, hält der Gesamtbetrag, nicht der Preis je Quadratmeter. */
+  if(PREISBEZUG==="gesamt" && kaufpreisFix!==null) P.preisQm = kaufpreisFix/Math.max(1,P.qm);
 
   /* Alter und Laufzeit folgen aus Geburtsjahr und Ruhestandsalter. */
   P.alter = Math.max(0, JETZT - Math.round(P.gebJahr));
@@ -932,7 +954,7 @@ function rechne(){
 
   document.getElementById("satzinhalt").innerHTML =
     "<p>Du hast <b>"+eur(P.ek)+"</b> Eigenkapital und willst <b>"+nf(P.qm)+" m²</b> kaufen, zu <b>"+
-      eur(P.preisQm)+"</b> je Quadratmeter.</p>"+
+      eur(P.preisQm)+"</b> je Quadratmeter"+(PREISBEZUG==="gesamt"?", wie es aus deinem Kaufpreis folgt":"")+".</p>"+
     "<p>Das kostet <b>"+eur(r.kaufpreis)+"</b>; was davon Eigenkapital, Nebenkosten und Kredit sind, steht in Schritt 2.</p>"+
     "<p>Monat für Monat zahlst du <b>"+eur(monatKauf)+"</b>, nämlich Rate und laufende Kosten. "+
       "Dieselbe Wohnung zur Miete kostet <b>"+eur(MIETE.get())+"</b>.</p>"+
@@ -1012,6 +1034,10 @@ function rechne(){
   document.getElementById("mietText").textContent = MIETBEZUG==="bleiben"
     ? "Du vergleichst Kaufen mit dem Verbleib in deiner jetzigen Wohnung. Trag deine echte Kaltmiete ein, auch wenn sie günstig ist."
     : "Du vergleichst Kaufen mit dem Neuanmieten einer vergleichbaren Wohnung. Trag die Marktmiete ein.";
+  setLive("kaufpreis", "Das sind "+eur(P.preisQm)+" je Quadratmeter bei "+nf(P.qm)+" m².");
+  document.getElementById("preisText").textContent = PREISBEZUG==="gesamt"
+    ? "Du gibst den Kaufpreis direkt ein. Änderst du die Fläche, bleibt der Kaufpreis stehen und der Preis je Quadratmeter passt sich an."
+    : "Du gibst den Preis je Quadratmeter ein. Änderst du die Fläche, wächst der Kaufpreis mit.";
   setLive("nkPct", "Das sind "+eur(r.nk)+" einmalig, zusätzlich zum Kaufpreis von "+eur(r.kaufpreis)+".");
   setLive("verkauf", "Beim Verkauf nach "+jahre+" Jahren gingen davon "+eur(e.wert*P.verkauf/100*d0)+" ab.");
   setLive("nebenMon", "Das sind "+eur(P.nebenMon*12)+" im Jahr, also "+
@@ -1137,6 +1163,20 @@ function setzeMietbezug(m){
   document.getElementById("mietBleiben").setAttribute("aria-pressed", m==="bleiben");
   rechne();
 }
+function setzePreisbezug(m){
+  PREISBEZUG=m;
+  kaufpreisFix = (m==="gesamt") ? KAUFPREIS.get() : null;
+  document.getElementById("preisQmWahl").setAttribute("aria-pressed", m==="qm");
+  document.getElementById("preisGesamtWahl").setAttribute("aria-pressed", m==="gesamt");
+  document.getElementById("r_preisQm").closest(".reg").hidden = (m==="gesamt");
+  document.getElementById("r_kaufpreis").closest(".reg").hidden = (m!=="gesamt");
+  const f=FELDER.find(x=>x.k==="preisQm");
+  document.getElementById("r_preisQm").value=P.preisQm;
+  document.getElementById("n_preisQm").value=zeige(f,P.preisQm);
+  rechne();
+}
+document.getElementById("preisQmWahl").addEventListener("click",()=>setzePreisbezug("qm"));
+document.getElementById("preisGesamtWahl").addEventListener("click",()=>setzePreisbezug("gesamt"));
 document.getElementById("mietNeu").addEventListener("click",()=>setzeMietbezug("neu"));
 document.getElementById("mietBleiben").addEventListener("click",()=>setzeMietbezug("bleiben"));
 document.getElementById("mReal").addEventListener("click",()=>setzeModus("real"));
@@ -1163,7 +1203,7 @@ document.getElementById("form").addEventListener("submit",ev=>ev.preventDefault(
 let nachMessen=null;
 window.addEventListener("resize",()=>{clearTimeout(nachMessen); nachMessen=setTimeout(rechne,200);});
 
-function los(){ baue(); rechne(); standZeigen(); }
+function los(){ baue(); setzePreisbezug("qm"); standZeigen(); }
 startwerteLaden().then(los, los);
 </script>
 

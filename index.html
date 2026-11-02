@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lohnt sich ein Immobilienkauf?</title>
+<style>
+:root{
+  --weiss:#ffffff;
+  --text:#000000;
+  --grau:#595959;
+  --hellgrau:#BFBFBF;
+  --feld:#E6E6E6;
+  --band:#F2F2F2;
+  --dunkelblau:#002060;
+  --blau:#0070C0;
+  --hellblau:#00B0F0;
+  --flaeche:#D6F2FC;
+  --rot:#C00000;
+  --serif:Palatino,"Palatino Linotype","Book Antiqua","URW Palladio L",Georgia,serif;
+  --grafikschrift:"Arial Narrow",Arial,Helvetica,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{background:var(--weiss);-webkit-text-size-adjust:100%}
+body{
+  background:var(--weiss); color:var(--text);
+  font-family:var(--serif); font-size:17px; line-height:1.5;
+  margin:0; padding:20px 16px 48px;
+}
+.huelle{max-width:720px;margin:0 auto}
+h1{font-size:1.8rem;line-height:1.15;margin:0 0 .3em;font-weight:700;color:var(--dunkelblau)}
+.vorspann{margin:0 0 20px;color:var(--grau);font-size:.95rem}
+
+
+/* ------------------------------------------------------------- Schritte */
+.schritt{margin:0 0 34px}
+.marke{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blau);
+  margin:0 0 4px;font-weight:700}
+h2{font-size:1.15rem;margin:0 0 4px;font-weight:700;color:var(--dunkelblau)}
+.untertitel{margin:0 0 16px;font-size:.86rem;color:var(--grau)}
+.gruppe{border:0.5px solid var(--hellgrau);border-top:2px solid var(--blau);padding:16px;background:var(--weiss)}
+.satz{margin:18px 0 0;padding:14px 16px;background:var(--band);border-left:4px solid var(--dunkelblau)}
+.satz h3{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dunkelblau);
+  margin:0 0 8px;font-weight:700}
+.satz p{margin:0 0 .45em;font-size:1.02rem;line-height:1.5}
+.satz p:last-child{margin:0}
+.satz b{font-weight:700;white-space:nowrap}
+.unbekannt{margin:0 0 22px}
+.unbekannt h3{font-size:1.02rem;margin:0 0 8px;font-weight:700;color:var(--dunkelblau)}
+.belege{border:1px solid var(--feld);border-top:none;padding:12px 16px;margin:0;background:#FAFAFA}
+.belege h3{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dunkelblau);
+  margin:0 0 8px;font-weight:700}
+.belege p{margin:0 0 .6em;font-size:.9rem;line-height:1.5}
+.belege p:last-child{margin:0}
+.belege .quelle{font-size:.82rem;color:var(--grau)}
+table.mini{width:100%;border-collapse:collapse;margin:0 0 10px;font-variant-numeric:tabular-nums;
+  font-family:var(--grafikschrift)}
+table.mini tr:nth-child(even){background:var(--band)}
+table.mini th{font-size:.84rem;color:var(--grau);font-weight:400;text-align:center;padding:5px 6px;
+  text-transform:none;letter-spacing:0}
+table.mini td{font-size:.92rem;text-align:center;padding:5px 6px}
+table.mini.links th{text-align:left;font-size:.86rem;color:var(--text)}
+table.mini.links td{text-align:right;font-weight:700;white-space:nowrap}
+.belege a{color:var(--blau)}
+.ergebniskopf{font-size:1.3rem}
+.kaufkraft{margin:16px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.mietwahl{margin:12px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.mietwahl p{margin:0;font-size:.84rem;color:var(--grau);flex:1 1 24ch}
+.kaufkraft p{margin:0;font-size:.86rem;color:var(--grau);flex:1 1 26ch}
+.tabkopf{font-size:1.05rem;margin:26px 0 4px;font-weight:700;color:var(--dunkelblau)}
+
+/* --------------------------------------------------------------- Regler */
+.reg{padding:0 0 14px;margin:0 0 14px;border-bottom:1px solid var(--feld)}
+.reg:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.kopf{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.kopf label{font-size:.95rem}
+.hilfe{
+  font:inherit;font-size:.82rem;line-height:1;color:var(--grau);background:none;
+  border:1px solid var(--hellgrau);border-radius:50%;width:24px;height:24px;margin-left:7px;
+  cursor:pointer;padding:0;vertical-align:-2px;
+}
+.hilfe[aria-expanded="true"]{background:var(--dunkelblau);color:#fff;border-color:var(--dunkelblau)}
+.zelle{display:inline-flex;align-items:center;border:1.5px solid var(--blau);background:var(--weiss);
+  cursor:text}
+.zelle:hover{background:#EAF8FE}
+.zelle:focus-within{box-shadow:0 0 0 3px rgba(0,112,192,.2)}
+.stift{font-size:.8rem;color:var(--blau);padding:0 0 0 9px;line-height:1}
+input.wert{
+  font:inherit;font-size:1.05rem;font-variant-numeric:tabular-nums;text-align:right;
+  width:5.6em;background:transparent;color:var(--text);border:none;padding:8px 4px 8px 10px;
+}
+input.wert:focus{outline:none}
+.zelle .einheit{font-size:.84rem;color:var(--grau);padding:0 10px 0 2px}
+input[type=range]{width:100%;accent-color:var(--blau);margin:12px 0 0;display:block;height:26px}
+.ticks{position:relative;height:7px;margin:0 9px}
+.ticks i.stdmarke{height:7px;width:2px;background:var(--blau)}
+.enden{display:flex;justify-content:space-between;font-size:.72rem;color:var(--grau);
+  font-variant-numeric:tabular-nums;margin:0 9px}
+.kasten{margin:10px 0 0;padding:10px 12px;background:var(--band);font-size:.86rem;line-height:1.45}
+.kasten p{margin:0 0 .5em}
+.kasten p:last-child{margin:0}
+.kasten .quelle{color:var(--grau)}
+.zurueckzeile{display:flex;justify-content:flex-end;margin:6px 9px 0}
+.std{font:inherit;font-size:.78rem;color:var(--blau);background:none;border:1px solid var(--feld);
+  padding:3px 8px;cursor:pointer}
+.std:hover:not(:disabled){border-color:var(--blau)}
+.std:disabled{color:var(--grau);cursor:default;border-color:var(--feld);opacity:.75}
+.live{font-size:.86rem;color:var(--text);margin:10px 0 0}
+
+/* -------------------------------------------------------------- Ergebnis */
+.ergebnis{border:2px solid var(--dunkelblau);padding:18px 16px 16px}
+.urteil{font-size:1.4rem;line-height:1.25;font-weight:700;margin:0 0 .25em;color:var(--dunkelblau)}
+.urteilsatz{margin:0 0 16px;font-size:.98rem}
+.vier{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--feld);
+  border-top:1px solid var(--feld);border-bottom:1px solid var(--feld);margin:0}
+.vier div{background:var(--weiss);padding:11px 12px}
+.vier div.kipp{background:#E8F7FD}
+.vier dt{font-size:.75rem;color:var(--grau);margin:0 0 2px;line-height:1.25}
+.vier dd{margin:0;font-size:1.16rem;font-variant-numeric:tabular-nums;font-weight:700;line-height:1.25}
+.vier dd small{display:block;font-size:.73rem;font-weight:400;color:var(--grau);line-height:1.35;margin-top:3px}
+.kippsatz{margin:12px 0 0;font-size:.9rem;color:var(--grau)}
+.tabrahmen{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table#szen{width:auto;min-width:100%;font-family:var(--grafikschrift)}
+table#szen tbody tr:nth-child(even){background:var(--band)}
+table#szen td.grenzeL{border-left:1px solid var(--rot)}
+table#szen td.grenzeO{border-top:1px solid var(--rot)}
+.legende{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.84rem;margin:0 0 8px}
+.legende i{display:inline-block;width:14px;height:14px;vertical-align:-2px;margin-right:6px}
+.legende .rotlinie{width:22px;height:0;border-top:1px solid var(--rot);vertical-align:4px}
+table#szen th,table#szen td{white-space:nowrap;padding:8px 10px}
+table#szen th[scope=row]{font-weight:700;color:var(--text);font-size:.86rem;text-transform:none;letter-spacing:0}
+table#szen td.szenzelle{cursor:pointer;font-variant-numeric:tabular-nums;text-align:right}
+table#szen td.aktiv{background:var(--flaeche);font-weight:700}
+table#szen th.szenkopf{font-size:.8rem;text-align:right}
+table#szen thead tr:first-child th{text-align:center;font-size:.74rem;padding-bottom:2px;font-weight:400}
+table#szen th.ecke{white-space:normal;max-width:8em;text-align:left;font-size:.74rem;
+  text-transform:none;letter-spacing:0;color:var(--grau);font-weight:400;line-height:1.25}
+@media (max-width:560px){ .vier{grid-template-columns:1fr} }
+.hinweis{border-left:3px solid var(--blau);padding:8px 12px;font-size:.88rem;background:#E8F7FD;margin:14px 0 0}
+.hinweis button{font:inherit;font-size:.86rem;color:var(--dunkelblau);background:var(--weiss);
+  border:1px solid var(--blau);padding:5px 10px;cursor:pointer;margin-left:6px}
+.warnung{border-left:3px solid var(--rot);padding:8px 12px;font-size:.88rem;background:#FBEAEA;margin:14px 0 0}
+
+
+/* --------------------------------------------------------------- Grafik */
+figure{margin:20px 0 0}
+figcaption{font-size:.82rem;color:var(--grau);margin-top:6px}
+svg{display:block;width:100%;height:auto}
+svg text{font-family:var(--grafikschrift)}
+
+/* ------------------------------------------------------------- Klappen */
+details{border-top:1px solid var(--hellgrau)}
+details{border:none;margin:0 0 8px}
+details > summary{
+  cursor:pointer;list-style:none;padding:12px 14px;font-size:.98rem;font-weight:700;color:var(--dunkelblau);
+  display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--band);
+  border:1px solid var(--feld);
+}
+details[open] > summary{border-bottom:none}
+details > .inhalt{border:1px solid var(--feld);border-top:none;padding:16px}
+details > summary::-webkit-details-marker{display:none}
+details > summary::after{content:"+";font-size:1.25rem;font-weight:400;color:var(--grau)}
+details[open] > summary::after{content:"–"}
+details > summary span{font-weight:400;color:var(--grau);font-size:.84rem;text-align:right}
+
+
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:8px 6px;font-size:.9rem}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:.74rem;color:var(--grau);font-weight:700;border-bottom:0.5px solid var(--hellgrau);
+  text-transform:uppercase;letter-spacing:.05em}
+tbody tr{cursor:pointer}
+tbody tr.aktiv td{background:var(--flaeche)}
+.vor{color:var(--dunkelblau)} .zurueck{color:var(--rot)}
+.liste{margin:0;display:grid;grid-template-columns:1fr auto;gap:0 14px;align-items:baseline}
+.liste dt{font-size:.88rem;color:var(--grau);padding:7px 0;border-bottom:0.5px solid var(--feld)}
+.liste dd{margin:0;font-size:.95rem;font-variant-numeric:tabular-nums;text-align:right;
+  padding:7px 0;border-bottom:0.5px solid var(--feld)}
+.liste dd small{display:block;font-size:.76rem;color:var(--grau);font-variant-numeric:normal}
+
+.knopf{font:inherit;font-size:.88rem;color:var(--dunkelblau);background:var(--weiss);
+  border:1px solid var(--hellgrau);padding:10px 14px;cursor:pointer;margin:0 8px 8px 0}
+.knopf:hover{border-color:var(--blau)}
+.wahl{display:inline-flex;border:1px solid var(--hellgrau)}
+.wahl button{font:inherit;font-size:.84rem;background:var(--weiss);color:var(--text);border:none;
+  padding:8px 12px;cursor:pointer}
+.wahl button + button{border-left:1px solid var(--hellgrau)}
+.wahl button[aria-pressed="true"]{background:var(--dunkelblau);color:#fff}
+.zeile{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px}
+.obenzeile{margin:0 0 18px}
+.zeile p{margin:0;font-size:.84rem;color:var(--grau);flex:1 1 20ch}
+footer{font-size:.86rem;color:var(--grau);line-height:1.5}
+footer p{margin:0 0 .6em}
+:focus-visible{outline:2px solid var(--blau);outline-offset:2px}
+@media (max-width:560px){
+  body{font-size:16px;padding:16px 14px 40px}
+  h1{font-size:1.5rem}
+  .urteil{font-size:1.22rem}
+  .satz p{font-size:.98rem}
+  .ergebniskopf{font-size:1.15rem}
+  .drei dd{font-size:1.1rem}
+  .knopf{width:100%;margin:0 0 8px}
+  .zeile{display:block}
+  details > summary{flex-wrap:wrap}
+  details > summary span{flex:1 0 100%;text-align:left;order:3;margin-top:3px}
+  details > summary::after{order:2}
+  table th,table td{padding:7px 8px;font-size:.84rem}
+  table#szen th,table#szen td{padding:7px 8px}
+}
+</style>
+</head>
+<body>
+
+<div class="huelle">
+  <h1>Lohnt sich ein Immobilienkauf?</h1>
+  <p class="vorspann">Zwei Wege, gleicher Wohnraum. Entweder du kaufst und zahlst ab, oder du mietest, legst dein Geld ins Depot und investierst jeden Monat die Differenz zwischen Wohnkosten und Miete. Trag deine Lage ein, der Rechner zeigt, wo du am Ende stehst. Er vergleicht Vermögen unter Annahmen; ob der Kauf monatlich tragbar ist und zu deinen Lebensplänen passt, beantwortet er nicht.</p>
+
+  <form id="form" autocomplete="off">
+    <p class="obenzeile"><button type="button" class="knopf" id="allesneu">Alles auf die Startwerte zurücksetzen</button></p>
+
+    <section class="schritt">
+      <p class="marke">Schritt 1 von 4</p>
+      <h2>Deine Lage</h2>
+      <p class="untertitel"><b>Jedes blau umrandete Feld ist ein Eingabefeld.</b> Antippen, eigene Zahl eintippen, fertig. Einheiten darfst du mitschreiben, „72 m²", „1.900 €" oder „2,5 %" landen alle richtig. Wer lieber schiebt, nimmt den Regler darunter. Das Fragezeichen erklärt, woher der Startwert kommt.</p>
+      <div id="kern" class="gruppe"></div>
+      <div class="mietwahl">
+        <span class="wahl" role="group" aria-label="Welche Miete gilt">
+          <button type="button" id="mietNeu" aria-pressed="true">Vergleichbare Wohnung neu mieten</button>
+          <button type="button" id="mietBleiben" aria-pressed="false">In meiner Wohnung bleiben</button>
+        </span>
+        <p id="mietText"></p>
+      </div>
+    </section>
+
+    <section class="schritt">
+      <p class="marke">Schritt 2 von 4</p>
+      <h2>Dein Kredit</h2>
+      <p class="untertitel">Was du monatlich zahlen kannst und zu welchem Zins. Nach dem Ende der Bindung wird neu verhandelt, die Rate bleibt in dieser Rechnung gleich.</p>
+      <div id="kredit" class="gruppe"></div>
+      <details id="dKredit">
+        <summary>Dein Kredit im Einzelnen <span id="kreditKurz"></span></summary>
+        <div class="inhalt"><dl class="liste" id="kz"></dl></div>
+      </details>
+    </section>
+
+    <section class="schritt">
+      <p class="marke">Schritt 3 von 4</p>
+      <h2>Was die Wohnung kostet, außer dem Kredit</h2>
+      <p class="untertitel">Diese drei Posten entscheiden mehr über das Ergebnis, als die meisten denken: die laufenden Kosten jeden Monat, die Nebenkosten beim Kauf, die Kosten beim Verkauf.</p>
+      <div id="kosten" class="gruppe"></div>
+      <details id="dWeitere">
+        <summary>Weitere Aspekte <span id="weitereKurz"></span></summary>
+        <div class="inhalt">
+          <p class="untertitel"><b>Startwert ist null, hier ist also nichts eingeplant.</b> Trag nur ein, was du wirklich erwartest: einmal für den Einzug, einmal für den großen Brocken mitten in der Laufzeit. Sobald du einen Betrag einträgst, fragt der Rechner zwei Dinge nach: in welchem Jahr die Sanierung ansteht und wie viel von beiden Ausgaben den Wert der Wohnung wirklich hebt. Die laufende Rücklage steckt schon in Schritt 3, hier geht es nur um das, was darüber hinausgeht.</p>
+          <div id="reno" class="gruppe"></div>
+          <div id="steigerung" class="gruppe" style="margin-top:14px"></div>
+        </div>
+      </details>
+      <div class="satz" id="satz">
+        <h3>Das ergibt zusammen</h3>
+        <div id="satzinhalt"></div>
+      </div>
+    </section>
+
+    <section class="schritt">
+      <p class="marke">Schritt 4 von 4</p>
+      <h2>Die zwei großen Unbekannten</h2>
+      <p class="untertitel">Das Ergebnis hängt vor allem an zwei Zahlen, und beide kennt niemand im Voraus. Deshalb steht zu jeder, was die Vergangenheit hergibt.</p>
+
+      <div class="unbekannt">
+        <h3>Deine Wohnung</h3>
+        <div id="unbekanntWert" class="gruppe"></div>
+        <div class="belege">
+          <p>Preise für Wohnimmobilien in Deutschland, Veränderung zum Vorjahr:</p>
+          <table class="mini">
+            <tr><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr>
+            <tr><td class="vor">+7,7 %</td><td class="vor">+11,7 %</td><td class="vor">+6,0 %</td>
+                <td class="zurueck">−8,5 %</td><td class="zurueck">−1,5 %</td><td class="vor">+3,2 %</td></tr>
+          </table>
+          <p>Über diese sechs Jahre zusammen sind das rund 2 % im Jahr, mit einem Boom und einem Einbruch darin. Zuletzt entscheidet die Lage:</p>
+          <table class="mini links">
+            <tr><th>Sieben größte Städte, Eigentumswohnungen</th><td class="vor">+0,3 %</td></tr>
+            <tr><th>Dünn besiedelte ländliche Kreise</th><td class="vor">+3,6 %</td></tr>
+            <tr><th>Berlin, alle Wohnimmobilien</th><td class="vor">+1,6 %</td></tr>
+            <tr><th>Deutschland insgesamt</th><td class="vor">+1,9 %</td></tr>
+          </table>
+          <p class="quelle">Die ersten beiden Zeilen aus dem ersten Quartal 2026, die letzten beiden aus dem zweiten Quartal 2026. Quellen: <a href="https://www.destatis.de/DE/Themen/Wirtschaft/Preise/Baupreise-Immobilienpreisindex/Tabellen/Haeuserpreise-Bauland.html" target="_blank" rel="noopener">Statistisches Bundesamt, Häuserpreisindex</a>, <a href="https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/06/PD26_219_61262.html" target="_blank" rel="noopener">Pressemitteilung vom 25.06.2026</a>, <a href="https://www.pfandbrief.de/wp-content/uploads/2026/08/20260810_vdp_PM_vdp-Index_Q2_2026_DE_final.pdf" target="_blank" rel="noopener">vdp-Immobilienpreisindex Q2 2026</a>. Keine dieser Zahlen ist eine Prognose für deine Wohnung.</p>
+        </div>
+      </div>
+
+      <div class="unbekannt">
+        <h3>Dein Depot</h3>
+        <div id="unbekanntDepot" class="gruppe"></div>
+        <div class="belege">
+          <p>Was Aktien in der Vergangenheit brachten, je Jahr:</p>
+          <table class="mini links">
+            <tr><th>DAX, 20 Jahre Haltedauer, im Mittel</th><td class="vor">8,5 %</td></tr>
+            <tr><th>DAX, schlechteste 20 Jahre</th><td class="vor">3,3 %</td></tr>
+            <tr><th>DAX, beste 20 Jahre</th><td class="vor">15,2 %</td></tr>
+            <tr><th>MSCI World, langfristig</th><td class="vor">knapp 8 %</td></tr>
+          </table>
+          <p>Diese Zahlen gelten vor Kosten und vor Steuer, und sie schwanken von Jahr zu Jahr stark. Der Startwert von 5 % liegt bewusst darunter.</p>
+          <p class="quelle">Quellen: <a href="https://www.dai.de/fileadmin/user_upload/241231_DAX-Rendite-Dreieck_50_Jahre_Web.pdf" target="_blank" rel="noopener">Deutsches Aktieninstitut, DAX-Rendite-Dreieck, Stand 31.12.2024</a>, <a href="https://www.finanztip.de/presse/pm-finanztip-msci-world-rendite/" target="_blank" rel="noopener">Finanztip zur MSCI-World-Rendite</a>. Keine dieser Zahlen ist eine Prognose.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="schritt">
+      <h2 class="ergebniskopf">Dein Ergebnis</h2>
+      <div class="ergebnis">
+        <p class="urteil" id="urteil"></p>
+        <p class="urteilsatz" id="urteilsatz"></p>
+        <dl class="vier" id="vier"></dl>
+        <p class="kippsatz" id="schwelltext"></p>
+        <div id="warnbox"></div>
+        <div id="hinweisbox"></div>
+        <div class="kaufkraft">
+          <span class="wahl" role="group" aria-label="Beträge anzeigen">
+            <button type="button" id="mReal" aria-pressed="true">in heutigem Geld</button>
+            <button type="button" id="mNom" aria-pressed="false">in Euro von morgen</button>
+          </span>
+          <p id="modusText"></p>
+        </div>
+      </div>
+
+      <h3 class="tabkopf">Was passiert, wenn es anders kommt</h3>
+      <p class="untertitel" id="szenUnter"></p>
+      <p class="legende">
+        <span><i style="background:var(--flaeche)"></i>deine Annahme</span>
+        <span><i class="rotlinie"></i>hier kippt das Ergebnis</span>
+        <span><b class="vor">+</b> Kaufen bringt mehr</span>
+        <span><b class="zurueck">−</b> mieten und anlegen bringt mehr</span>
+      </p>
+      <div class="tabrahmen">
+        <table id="szen">
+          <thead>
+            <tr><th class="ecke">Wohnung wird teurer je Jahr ↓</th><th id="szenEcke" colspan="5">Dein Depot bringt je Jahr →</th></tr>
+            <tr><th class="ecke"></th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="untertitel" style="margin:10px 0 0">Zelle antippen übernimmt beide Werte in Schritt 4.</p>
+
+      <h3 class="tabkopf">Zahlen mitnehmen</h3>
+      <p class="untertitel">Die Excel-Datei hat zwei Blätter: deine Eckdaten samt Herkunft jedes Startwerts und die volle Jahresreihe beider Wege zum Weiterrechnen, dort auf den Euro genau.</p>
+      <div class="zeile">
+        <button type="button" class="knopf" id="dlXlsx">Excel-Datei laden</button>
+        <button type="button" class="knopf" id="dlCsv">CSV laden</button>
+        <button type="button" class="knopf" id="kopieren">In die Zwischenablage</button>
+        <button type="button" class="knopf" id="allesneu2">Alles zurücksetzen</button>
+      </div>
+      <p class="untertitel" id="dlHinweis" style="margin:10px 0 0">Die CSV passt in jede Tabellenkalkulation, der dritte Knopf legt dieselben Zahlen in die Zwischenablage.</p>
+    </section>
+
+    <section class="schritt">
+      <h2>Mehr dazu</h2>
+
+
+
+      <details id="dGeld">
+        <summary>Geldwert und Steuer <span id="geldKurz"></span></summary>
+        <div class="inhalt"><div id="geldwert" class="gruppe"></div></div>
+      </details>
+
+      <details id="dMethode">
+        <summary>So rechnet die Seite <span>Annahmen, Grenzen, Quellen</span></summary>
+        <div class="inhalt">
+          <footer>
+            <p>Auf dem zweiten Weg wandert dasselbe Geld ins Depot, das der Käufer für Nebenkosten, Renovierung und Anzahlung ausgibt, dazu jeden Monat die Differenz zwischen den Wohnkosten des Käufers und der Miete; ist die Differenz negativ, geht sie aus dem Depot ab. Unterstellt ist ein breiter Aktienfonds: 26,375 % Abgeltungsteuer auf den Gewinn, davon 30 % teilfrei, wie es das Investmentsteuergesetz für Aktienfonds vorsieht. Jedes Jahr fällt die Vorabpauschale auf einen gedachten Mindestertrag an; was dabei schon versteuert wurde, rechnet der Rechner am Ende an. Andere Anlagen, etwa Anleihen oder Tagesgeld, würden anders besteuert.</p>
+            <p>Beim Verkauf der selbst bewohnten Wohnung fällt in dieser Rechnung keine Steuer an. Das deckt sich mit dem Gesetz: Wer die Wohnung im Jahr des Verkaufs und in den beiden Jahren davor selbst bewohnt hat, verkauft auch vor Ablauf von zehn Jahren steuerfrei. Die Verkaufskosten stehen für das, was beim Verkäufer anfällt: sein Anteil an der Maklerprovision, Energieausweis, Notartermin, oft auch ein Abschlag für längst fällige Arbeiten.</p>
+            <p>Die laufenden Kosten enthalten bereits Instandhaltung und Rücklage. Die große Sanierung meint deshalb nur den Teil, den die angesparte Rücklage nicht deckt, also typischerweise eine Sonderumlage. Wer beides voll ansetzt, zählt dieselben Kosten zweimal. Heizung und Betriebskosten tauchen nirgends auf, weil sie auf beiden Wegen anfallen; die angezeigten Wohnkosten sind deshalb kein vollständiges Haushaltsbudget.</p>
+            <p>Beide Wege werden am Ende glattgestellt: das Depot nach Steuer, die Wohnung nach Verkaufskosten. Die monatliche Rate bleibt auch nach dem Ende der Zinsbindung gleich, der neue Zins verschiebt nur das Verhältnis von Zins und Tilgung. Rutscht das Depot ins Minus, weil die Miete teurer ist als die Wohnkosten, wirft es keine Rendite mehr ab.</p>
+            <p id="standzeile"></p>
+            <p>Rechtsgrundlagen zum Nachlesen: <a href="https://www.gesetze-im-internet.de/estg/__23.html" target="_blank" rel="noopener">§ 23 EStG zur Steuerfreiheit bei Selbstnutzung</a> und das <a href="https://www.gesetze-im-internet.de/invstg_2018/BJNR173010016.html" target="_blank" rel="noopener">Investmentsteuergesetz zur Teilfreistellung</a>.</p>
+            <p>Der Vergleich unterstellt eiserne Disziplin: Auf dem zweiten Weg wandert die Differenz zwischen Wohnkosten und Miete wirklich jeden Monat ins Depot, über Jahrzehnte, ohne Ausnahme. Wer kauft, spart dagegen gezwungenermaßen, weil die Bank jeden Monat ihre Rate bekommt. Wer sich selbst nicht traut, sollte das Ergebnis zugunsten des Kaufs lesen.</p>
+            <p>Das Leben kommt in dieser Rechnung nicht vor. Umzug, Trennung, Jobwechsel, ein zweiter Standort, eine zweite Sonderumlage, ein Verkauf zur Unzeit: all das trifft den Kauf härter als die Miete, weil eine Wohnung sich nicht in Teilen und nicht schnell verkaufen lässt. Dafür schützt Eigentum vor Kündigung und vor Mieten, die schneller steigen als hier unterstellt.</p>
+            <p>Woher jeder Startwert kommt, steht beim Fragezeichen des jeweiligen Reglers: Preis je Quadratmeter und Vergleichsmiete aus dem IBB Wohnungsmarktbericht 2025, der Zins von Interhyp mit Stand 10.09.2026, die Grunderwerbsteuer nach Berliner Satz, Inflation und Kostenanstieg nach dem Ziel der EZB, der Rest als offen genannte Faustregel oder frei gewähltes Beispiel.</p>
+          </footer>
+        </div>
+      </details>
+    </section>
+  </form>
+</div>
+
+<script>
+const P = {preisQm:5929, qm:70, ek:83006, rateMon:1875, gebJahr:1986, ruhestand:67,
+           jahre:27, alter:40, wert:3.0, zins:4.2, bindung:10, zins2:4.2, nebenMon:346,
+           renoStart:0, sanierung:0, sanJahr:15, renoWert:50,
+           mieteQm:15.78, nkPct:7.5, verkauf:3.6, depot:5.0, mietSteig:1.0,
+           nebenSteig:2.0, infl:2.0, basiszins:2.5};
+const STD = Object.assign({}, P);
+
+/* Startwerte aus startwerte.json holen, wenn die Seite auf einem Server liegt.
+   Scheitert der Abruf, etwa weil die Datei einzeln geöffnet wird, bleiben die
+   eingebauten Werte stehen; die Seite funktioniert in beiden Fällen. */
+const STARTWERTE_URL = "startwerte.json";
+let STAND = null, QUELLEN = [];
+async function startwerteLaden(){
+  try{
+    const antwort = await fetch(STARTWERTE_URL, {cache:"no-store"});
+    if(!antwort.ok) return;
+    const d = await antwort.json();
+    for(const [k,v] of Object.entries(d.werte||{}))
+      if(Object.prototype.hasOwnProperty.call(P,k) && typeof v==="number" && isFinite(v)){ P[k]=v; STD[k]=v; }
+    for(const [k,t] of Object.entries(d.herkunft||{})){
+      const f = FELDER.find(x=>x.k===k);
+      if(f && typeof t==="string") f.q = t;
+    }
+    STAND = d.stand || null;
+    QUELLEN = Array.isArray(d.quellen) ? d.quellen : [];
+  }catch(e){ /* eingebaute Werte bleiben */ }
+}
+function standZeigen(){
+  const sz = document.getElementById("standzeile");
+  if(!sz) return;
+  if(!STAND){ sz.textContent = "Diese Seite läuft mit den eingebauten Startwerten."; return; }
+  const autom = QUELLEN.filter(q=>q && q.automatisch).map(q=>q.name);
+  sz.textContent = "Startwerte zuletzt geprüft am "+STAND+
+    (autom.length ? ". Automatisch nachgeführt werden: "+autom.join(", ")+"." : ".");
+}
+
+/* Die Monatsmiete ist ein abgeleiteter Regler: innen rechnet alles je Quadratmeter. */
+const MIETE = {
+  get:()=>P.mieteQm*P.qm,
+  set:v=>{ P.mieteQm = v/Math.max(1,P.qm); },
+  std:()=>STD.mieteQm*STD.qm
+};
+
+const FELDER = [
+  {k:"ek",      g:"kern", t:"Geld, das du einsetzen kannst", e:"€",    min:0,  max:400000,s:1000, f:0, live:true,
+   h:"Alles, was du für den Kauf flüssig hast, nach Abzug deiner Notfallreserve. Daraus zahlst du zuerst Kaufnebenkosten und Renovierung, der Rest mindert den Kredit. Auf dem anderen Weg wandert genau dieselbe Summe ins Depot, sonst wäre der Vergleich schief.",
+   q:"Startwert 83.006 €: 20 % des voreingestellten Kaufpreises, die Quote, die Banken üblicherweise sehen wollen."},
+  {k:"qm",      g:"kern", t:"Gewünschte Wohnfläche",      e:"m²",    min:25, max:200,  s:1,    f:0,
+   h:"Größe der Wohnung. Sie bestimmt Kaufpreis und Vergleichsmiete zugleich, beide Wege wohnen also gleich groß.",
+   q:"Startwert 70 m²: frei gewählte Beispielgröße, nah an der durchschnittlichen Berliner Wohnung."},
+  {k:"preisQm", g:"kern", t:"Preis je Quadratmeter",      e:"€",     min:1500,max:12000,s:50,   f:0,
+   h:"Was der Quadratmeter in deiner Wunschgegend kostet. Schau in zwei, drei Inserate.",
+   q:"Startwert 5.929 €: Berliner Altbau im Mittel, IBB Wohnungsmarktbericht 2025."},
+  {k:"mieteMon",g:"kern", t:"Deine Miete auf dem anderen Weg", e:"€/Monat",min:200,max:6000, s:10,  f:0, virt:MIETE, live:true,
+   h:"Trag die Miete ein, die deine echte Alternative ist. Willst du eine vergleichbare Wohnung neu anmieten, nimm die Marktmiete; dann wächst der Betrag mit der Fläche mit. Willst du dagegen in deiner jetzigen Wohnung bleiben, nimm genau deine heutige Kaltmiete, auch wenn sie günstig ist; dann bleibt sie von der Fläche unberührt. Beide Fragen sind berechtigt, sie führen nur zu verschiedenen Antworten.",
+   q:"Startwert 1.105 €: 70 m² zur Berliner Angebotsmiete von 15,78 € je Quadratmeter, IBB Wohnungsmarktbericht 2025."},
+  {k:"rateMon", g:"kredit", t:"Das kann ich monatlich zahlen", e:"€",  min:300,max:6000, s:25,   f:0,
+   h:"Was du Monat für Monat an die Bank überweisen kannst, Zins und Tilgung zusammen. Diese Rate entscheidet, welchen Kaufpreis du dir leisten kannst.",
+   q:"Startwert 1.875 €: 2 % Anfangstilgung auf den voreingestellten Kredit von 363.151 €, also Kreditsumme mal 6,2 %, geteilt durch 12."},
+  {k:"gebJahr", g:"kern", t:"Geburtsjahr",                e:"",      min:1945,max:2008, s:1,    f:0, roh:true,
+   h:"Daraus rechnet der Rechner dein Alter und die Jahre bis zum Ruhestand. Der Vergleich läuft genau so lange.",
+   q:"Startwert 1986: frei gewählte Beispielperson, heute 40."},
+  {k:"ruhestand",g:"kern", t:"Geplantes Ruhestandsalter",  e:"Jahre", min:55, max:75,   s:1,    f:0,
+   h:"Mit wie vielen Jahren du aufhören willst. Die gesetzliche Regelaltersgrenze liegt für die Jahrgänge ab 1964 bei 67. Wer früher aufhört, verkürzt den Vergleich.",
+   q:"Startwert 67 Jahre: die Regelaltersgrenze nach geltendem Recht.", live:true},
+
+  {k:"wert",    g:"unbekanntWert", t:"Wertsteigerung je Jahr", e:"%",   min:-4, max:10,   s:0.1,  f:1,
+   h:"Dein Szenario für den Preis der Wohnung, in Euro gerechnet, also einschließlich Inflation. Zwischen 2000 und 2022 stiegen Berliner Preise kräftig, seither fallen sie zeitweise.",
+   q:"Startwert 3,0 %: ein rundes Mittelszenario, keine Prognose."},
+
+  {k:"zins",    g:"kredit", t:"Sollzins, erste Bindung",    e:"%",     min:0.5,max:9,    s:0.1,  f:1,
+   h:"Der Zins, den die Bank heute nimmt.",
+   q:"Startwert 4,2 %: Interhyp-Schnitt für zehn Jahre Bindung, Stand 10.09.2026."},
+  {k:"bindung", g:"kredit", t:"Zinsbindung läuft",          e:"Jahre", min:5,  max:40,   s:1,    f:0,
+   h:"So lange steht der Zins fest, danach wird neu verhandelt. Wer die Bindung so lang setzt wie die Laufzeit, rechnet mit einem Zins für alles.",
+   q:"Startwert 10 Jahre: die in Deutschland häufigste Bindung."},
+  {k:"zins2",   g:"kredit", t:"Sollzins danach",            e:"%",     min:0.5,max:12,   s:0.1,  f:1,
+   h:"Der Zins für die Restschuld nach dem Ende der Bindung. Das größte echte Risiko: die Rate bleibt gleich, bei höherem Zins tilgst du langsamer. Stell 7 % ein, um einen Zinsschock zu sehen.",
+   q:"Startwert 4,2 %: wie der erste Zins, der Rechner unterstellt also von sich aus keine Wende."},
+  {k:"nebenMon",g:"kosten", t:"Laufende Kosten als Eigentümer", e:"€/Monat", min:0, max:1200, s:10, f:0, live:true,
+   auto:()=>P.qm*P.preisQm*0.01/12,
+   h:"Nur der Teil, den ein Vermieter nicht auf Mieter umlegen darf: Verwalter, Instandhaltung, Rücklage. Heizung und Betriebskosten zahlen beide Wege, sie fallen hier raus. Solange du den Regler nicht anfasst, wächst dieser Betrag mit dem Kaufpreis mit.",
+   q:"Startwert 346 €: 1 % des Kaufpreises im Jahr, die gängige Faustregel, hier auf den Monat gerechnet."},
+  {k:"renoStart",g:"reno",t:"Renovierung beim Einzug",    e:"€",     min:0,  max:200000,s:1000, f:0,
+   h:"Was du vor dem Einzug einmalig ausgibst, zusätzlich zum Kaufpreis: Bad, Küche, Böden, Elektrik. Das Geld kommt aus deinem Budget aus Schritt 1 und fehlt damit bei der Anzahlung. Auf dem anderen Weg wandert derselbe Betrag ins Depot, sonst wäre der Vergleich schief.",
+   q:"Startwert 0 €: der Rechner unterstellt eine bezugsfertige Wohnung. Eine Kernsanierung kostet eher 500 bis 1.500 € je Quadratmeter, eine Auffrischung 100 bis 300 €."},
+  {k:"sanierung",g:"reno",t:"Große Sanierung später",     e:"€",     min:0,  max:300000,s:1000, f:0,
+   h:"Nur der Teil, den die angesparte Rücklage nicht deckt, also typischerweise eine Sonderumlage für Heizung, Fenster oder Dach. Die laufenden Kosten enthalten die Rücklage schon; wer hier den vollen Betrag einträgt, zählt dieselben Kosten zweimal.",
+   q:"Startwert 0 €: in den laufenden Kosten steckt schon eine Rücklage von 1 % des Kaufpreises im Jahr. Für eine neue Heizung samt Fenstern sind 30.000 bis 60.000 € je Wohnung ein üblicher Anhalt."},
+  {k:"sanJahr", g:"reno", t:"Jahr der großen Sanierung",  e:"Jahr",  min:1,  max:45,   s:1,    f:0,
+   h:"In welchem Jahr nach dem Kauf die Sonderumlage fällig wird. Liegt das Jahr hinter deinem Vergleichszeitraum, passiert nichts.",
+   q:"Startwert 15: grobe Mitte einer 27-jährigen Laufzeit, also der Zeitpunkt, an dem Bauteile aus den Neunzigern fällig werden."},
+  {k:"renoWert",g:"reno", t:"Wertsteigernder Anteil der Renovierung", e:"%",     min:0,  max:100,  s:5,    f:0,
+   h:"Wie viel von beiden Beträgen den Preis der Wohnung wirklich hebt. Der Rest ist Geld, das du ausgibst und beim Verkauf nicht wiedersiehst. Eine neue Heizung zahlt sich im Preis eher aus als ein Bad nach deinem Geschmack.",
+   q:"Startwert 50 %: Faustregel aus der Praxis, dass sich etwa die Hälfte solcher Ausgaben im Verkaufspreis wiederfindet. Energetische Arbeiten liegen höher, Geschmacksfragen niedriger."},
+  {k:"nkPct",   g:"kosten", t:"Kaufnebenkosten",            e:"%",     min:0,  max:15,   s:0.1,  f:1, live:true,
+   h:"Grunderwerbsteuer, Notar, Grundbuch, bei Bedarf Makler. Dieses Geld ist am Tag nach dem Kauf weg.",
+   q:"Startwert 7,5 %: Berlin, 6 % Grunderwerbsteuer plus rund 1,5 % Notar und Grundbuch, ohne Makler. Mit Makler eher 11 %."},
+  {k:"verkauf", g:"kosten", t:"Verkaufskosten am Ende",     e:"%",     min:0,  max:10,   s:0.1,  f:1, live:true,
+   h:"Was beim Verkauf vom Wohnwert abgeht: Makler, Energieausweis, Notartermin, oft auch ein Abschlag für längst fällige Arbeiten. Auf null stellen heißt: die Wohnung bleibt in der Familie.",
+   q:"Startwert 3,6 %: der Anteil des Verkäufers an der Maklerprovision in Berlin, 3,57 % einschließlich Umsatzsteuer, gerundet; seit 2020 teilen sich Käufer und Verkäufer die Provision."},
+  {k:"depot",   g:"unbekanntDepot", t:"Depotrendite je Jahr",       e:"%",     min:0,  max:12,   s:0.1,  f:1,
+   h:"Was das Geld auf dem zweiten Weg im Schnitt bringt, nach Kosten und vor Steuer.",
+   q:"Startwert 5,0 %: illustratives Ausgangsszenario, keine Prognose; es liegt unter den 6 bis 8 %, die ein breiter Aktienindex langfristig in Euro gebracht hat."},
+  {k:"mietSteig",g:"steigerung",t:"Mietsteigerung je Jahr",     e:"%",     min:0,  max:6,    s:0.1,  f:1,
+   h:"Um wie viel die Miete jedes Jahr steigt. Wer mit Umzügen rechnet, nimmt 2 bis 3 %.",
+   q:"Startwert 1,0 %: vorsichtig gesetzt, weil das Mietrecht im laufenden Vertrag bremst."},
+  {k:"nebenSteig",g:"steigerung",t:"Anstieg der Eigentümerkosten", e:"%",  min:0,  max:6,    s:0.1,  f:1,
+   h:"Um wie viel Verwalter, Reparaturen und Rücklage jedes Jahr teurer werden. Bei anstehender Sanierung ist mehr realistisch.",
+   q:"Startwert 2,0 %: das Inflationsziel der EZB."},
+  {k:"basiszins",g:"geldwert",t:"Basiszins der Vorabpauschale", e:"%",   min:0,  max:5,    s:0.1,  f:1,
+   h:"Damit versteuert das Finanzamt jedes Jahr einen gedachten Mindestertrag des Depots, auch ohne Verkauf. Der Betrag wird am Ende angerechnet, doppelt zahlst du also nicht. Auf null stellen heißt: Steuer erst beim Verkauf.",
+   q:"Startwert 2,5 %: Größenordnung des Basiszinses, den das Bundesfinanzministerium jedes Jahr neu festsetzt."},
+  {k:"infl",    g:"geldwert", t:"Inflation je Jahr",          e:"%",     min:0,  max:8,    s:0.1,  f:1,
+   h:"Nur für den Schalter im Ergebnis nötig: damit rechnet der Rechner künftige Euro in heutige Kaufkraft um. Auf die nötige Wertsteigerung hat dieser Regler keinen Einfluss.",
+   q:"Startwert 2,0 %: das Inflationsziel der EZB."}
+];
+
+let MODUS = "real";
+let MIETBEZUG = "neu";   /* neu = Marktmiete, waechst mit der Flaeche; bleiben = fester Monatsbetrag */
+let mieteFix = null;
+const hol = f => f.virt ? f.virt.get() : P[f.k];
+const leg = (f,v) => { if(f.virt) f.virt.set(v); else P[f.k]=v; };
+const startwert = f => f.virt ? f.virt.std() : STD[f.k];
+
+const nf = (x,d=0)=>new Intl.NumberFormat("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d}).format(x);
+const eur = x => nf(Math.round(x))+" €";
+/* Große Summen in der Hauptansicht auf Tausender runden: 27 Jahre tragen keine Eurogenauigkeit. */
+const rund = x => { const a=Math.abs(x);
+  if(a<10000) return nf(Math.round(x/100)*100)+" €";
+  return nf(Math.round(x/1000)*1000)+" €"; };
+const kurz = x => {
+  const a=Math.abs(x);
+  if(a>=1e6) return (x<0?"−":"")+nf(a/1e6,2).replace(/,00$/,"")+" Mio";
+  if(a>=1e3) return (x<0?"−":"")+nf(a/1e3,0)+"k";
+  return (x<0?"−":"")+nf(a,0);
+};
+const defl = j => MODUS==="real" ? Math.pow(1+P.infl/100, -j) : 1;
+
+function lauf(p, wertPct, depotPct){
+  const kaufpreis = p.qm*p.preisQm;
+  const nk  = kaufpreis*p.nkPct/100;
+  /* Das Eigenkapital zahlt zuerst Nebenkosten und Renovierung, der Rest mindert den Kredit.
+     Beide Wege binden am Anfang genau dieselbe Summe. */
+  const vorab = nk + p.renoStart;
+  const einsatz = Math.min(p.ek, kaufpreis+vorab);
+  const kredit  = Math.max(0, kaufpreis+vorab-einsatz);
+  const ueberschuss = Math.max(0, p.ek-(kaufpreis+vorab));
+  const ekKnapp = p.ek < vorab;
+  const annu = p.rateMon*12;
+  const w = wertPct/100, dr = (depotPct===undefined?p.depot:depotPct)/100, vk = p.verkauf/100;
+  const basis = p.basiszins/100;
+  const anteil = p.renoWert/100, sanJahr = Math.round(p.sanJahr);
+  const zi1 = p.zins/100, zi2 = p.zins2/100, bind = Math.round(p.bindung);
+  let rest=kredit, wert=kaufpreis+p.renoStart*anteil, depot=einsatz, eingezahlt=einsatz;
+  let versteuert=0, steuerSumme=0;
+  let miete=p.mieteQm*p.qm*12, neben=p.nebenMon*12;
+  const reihe=[]; let schuldenfrei=null, unterdeckt=false, unterdecktJahr=null, unterdecktZins=0;
+  const jahre=Math.round(p.jahre);
+  for(let j=1;j<=jahre;j++){
+    const zi = j<=bind ? zi1 : zi2;
+    const zinsJ = rest*zi;
+    let tilg = annu-zinsJ;
+    if(rest>0 && tilg<=0){ tilg=0; if(!unterdeckt){unterdeckt=true; unterdecktJahr=j; unterdecktZins=zinsJ;} }
+    tilg = Math.max(0, Math.min(tilg, rest));
+    rest -= tilg;
+    if(rest<=0.5 && schuldenfrei===null && kredit>0) schuldenfrei=j;
+    const san = (j===sanJahr) ? p.sanierung : 0;
+    const ausgaben = zinsJ+tilg+neben+san;
+    wert = wert*(1+w)+san*anteil;
+    const kaeufer = wert*(1-vk)-rest;
+    const diff = ausgaben-miete;
+    const anfang = depot;
+    depot = (depot>0 ? depot*(1+dr) : depot) + diff;
+    eingezahlt += diff;
+    /* Vorabpauschale: jedes Jahr wird der Basisertrag versteuert, höchstens der Wertzuwachs. */
+    const zuwachs = Math.max(0, depot - anfang - diff);
+    const basisertrag = Math.max(0, anfang)*basis*0.70;
+    const vorabBetrag = Math.min(zuwachs, basisertrag);
+    const vorabSteuer = vorabBetrag*0.70*0.26375;
+    depot -= vorabSteuer;
+    versteuert += vorabBetrag;
+    steuerSumme += vorabSteuer;
+    const offenerGewinn = Math.max(0, depot+steuerSumme-eingezahlt-versteuert);
+    const steuer = offenerGewinn*0.26375*0.70;
+    reihe.push({j, kaeufer, mieter:depot-steuer, rest, wert, ausgaben, miete, zinsJ, tilg, neben, san,
+                depot, steuer, vorabSteuer});
+    miete *= 1+p.mietSteig/100;
+    neben *= 1+p.nebenSteig/100;
+  }
+  return {reihe, schuldenfrei, unterdeckt, unterdecktJahr, unterdecktZins, kaufpreis, nk, vorab, kredit, einsatz, annu,
+          ueberschuss, ekKnapp, ende:reihe[reihe.length-1]};
+}
+
+function schwelle(p){
+  const f = w => { const r=lauf(p,w).ende; return r.kaeufer-r.mieter; };
+  let lo=-12, hi=25;
+  if(f(lo)>0) return {wert:null, lage:"unter"};
+  if(f(hi)<0) return {wert:null, lage:"ueber"};
+  for(let i=0;i<70;i++){ const m=(lo+hi)/2; if(f(m)<0) lo=m; else hi=m; }
+  return {wert:(lo+hi)/2, lage:"ok"};
+}
+
+/* Rate, die den Kredit bis zum Ende genau abzahlt. */
+function tilgendeRate(p){
+  const rest = r => lauf(Object.assign({},p,{rateMon:r}), p.wert).ende.rest;
+  let hi = Math.max(300, p.rateMon);
+  for(let i=0;i<40 && rest(hi)>0.5;i++) hi*=1.3;
+  if(rest(hi)>0.5) return null;
+  let lo = 0;
+  for(let i=0;i<50;i++){ const m=(lo+hi)/2; if(rest(m)>0.5) lo=m; else hi=m; }
+  return Math.ceil(hi/25)*25;
+}
+/* Kaufpreis, den die eingestellte Rate bis zum Ende abbezahlt. */
+function tragbarerPreis(p){
+  if(p.qm<=0) return 0;
+  const rest = kp => lauf(Object.assign({},p,{preisQm:kp/p.qm}), p.wert).ende.rest;
+  let lo=0, hi=Math.max(50000, p.ek+p.rateMon*12*60);
+  if(rest(hi)<=0.5) return hi;
+  for(let i=0;i<50;i++){ const m=(lo+hi)/2; if(rest(m)<=0.5) lo=m; else hi=m; }
+  return lo;
+}
+
+/* ---------------------------------------------------------------- Bedienung */
+const zeige = (f,v) => f.roh ? String(Math.round(v)) : nf(v,f.f);
+
+function striche(f){
+  /* Keine Teilstriche, nur die Marke des Startwerts und die beiden Endwerte. */
+  const spanne=f.max-f.min;
+  return '<div class="ticks"><i class="stdmarke" style="left:'+
+         ((startwert(f)-f.min)/spanne*100).toFixed(2)+'%"></i></div>'+
+         '<div class="enden"><span>'+zeige(f,f.min)+'</span><span>'+zeige(f,f.max)+'</span></div>';
+}
+
+const GRUPPEN = ["kern","kredit","kosten","unbekanntWert","unbekanntDepot","reno","steigerung","geldwert"];
+function baue(){
+  let nr=0;
+  const sortiert = GRUPPEN.flatMap(g=>FELDER.filter(f=>f.g===g));
+  for(const f of sortiert){
+    nr++; f.nr=nr;
+    const d=document.createElement("div"); d.className="reg";
+    d.innerHTML =
+      '<div class="kopf">'+
+      '<label for="n_'+f.k+'">'+f.t+
+      '<button type="button" class="hilfe" id="h_'+f.k+'" aria-expanded="false" aria-label="Erklärung zu '+f.t+'">?</button></label>'+
+      '<span class="zelle" title="Antippen und eintippen"><span class="stift" aria-hidden="true">&#9998;</span>'+
+      '<input type="text" class="wert" inputmode="decimal" id="n_'+f.k+'" '+
+      'aria-label="'+f.t+', Wert eintippen"'+(f.e?'><span class="einheit">'+f.e+'</span>':'>')+
+      '</span></div>'+
+      '<input type="range" id="r_'+f.k+'" min="'+f.min+'" max="'+f.max+'" step="'+f.s+'" aria-label="Regler für '+f.t+'">'+
+      striche(f)+
+      '<div class="zurueckzeile"><button type="button" class="std" id="s_'+f.k+'"></button></div>'+
+      (f.live?'<p class="live" id="live_'+f.k+'"></p>':'')+
+      '<div class="kasten" id="k_'+f.k+'" hidden><p>'+f.h+'</p>'+
+      '<p class="quelle">'+f.q+
+      (f.k==="rateMon"?' <button type="button" class="std" id="passend">Rate zum Kaufpreis passend setzen</button>':'')+
+      '</p></div>';
+    document.getElementById(f.g).appendChild(d);
+    const nn=d.querySelector("input.wert"), rr=d.querySelector("input[type=range]");
+    nn.value=zeige(f,hol(f)); rr.value=hol(f);
+    rr.addEventListener("input",()=>{f.beruehrt=true; leg(f,+rr.value); nn.value=zeige(f,+rr.value); rechne();});
+    nn.addEventListener("focus",()=>nn.select());
+    nn.addEventListener("change",()=>uebernimm(f,nn));
+    nn.addEventListener("keydown",ev=>{ if(ev.key==="Enter"){ ev.preventDefault(); nn.blur(); } });
+    d.querySelector(".std").addEventListener("click",()=>{f.beruehrt=false; setze(f,startwert(f));});
+    const pass=d.querySelector("#passend");
+    if(pass) pass.addEventListener("click",()=>{
+      const kp=P.qm*P.preisQm, vorab=kp*P.nkPct/100+P.renoStart;
+      const kredit=Math.max(0, kp+vorab-Math.min(P.ek,kp+vorab));
+      const v=Math.round(kredit*(P.zins/100+0.02)/12/f.s)*f.s;
+      f.beruehrt=true;
+      setze(f, Math.min(f.max,Math.max(f.min,v)));
+    });
+    d.querySelector(".hilfe").addEventListener("click",ev=>{
+      const kasten=document.getElementById("k_"+f.k), auf=kasten.hidden;
+      kasten.hidden=!auf;
+      ev.currentTarget.setAttribute("aria-expanded", auf);
+    });
+  }
+}
+
+/* Nimmt auch "72m2", "1.900 €", "4,2 %" entgegen. */
+function uebernimm(f, nn){
+  /* Erste Zahl im Text nehmen, damit "72 m2" oder "1.900 €" sauber durchgehen. */
+  const treffer=String(nn.value).match(/-?\d+(?:[.,\s]\d+)*/);
+  let roh=treffer ? treffer[0].replace(/\s/g,"") : "";
+  if(roh.indexOf(",")>=0) roh=roh.replace(/\./g,"").replace(",",".");
+  else if(/^-?\d+\.\d{3}$/.test(roh)) roh=roh.replace(".","");
+  let v=parseFloat(roh);
+  if(!isFinite(v)) v=hol(f);
+  v=Math.min(f.max,Math.max(f.min,v));
+  f.beruehrt=true;
+  setze(f,v);
+}
+
+function setze(f,v){
+  leg(f,v);
+  document.getElementById("r_"+f.k).value=v;
+  document.getElementById("n_"+f.k).value=zeige(f,v);
+  rechne();
+}
+
+function allesZurueck(){
+  Object.assign(P, STD);
+  for(const f of FELDER) f.beruehrt=false;
+  for(const f of FELDER){
+    document.getElementById("r_"+f.k).value=hol(f);
+    document.getElementById("n_"+f.k).value=zeige(f,hol(f));
+  }
+  rechne();
+}
+
+function setzeModus(m){
+  MODUS=m;
+  document.getElementById("mNom").setAttribute("aria-pressed", m==="nominal");
+  document.getElementById("mReal").setAttribute("aria-pressed", m==="real");
+  rechne();
+}
+
+/* --------------------------------------------------------------- Ausgabe */
+function csvText(){
+  const r = lauf(P, P.wert), sw = schwelle(P);
+  const z = v => String(v).replace(/"/g,'""');
+  const num = v => nf(v,2);
+  const L=[];
+  L.push('"Lohnt sich ein Immobilienkauf, Rechenstand vom '+new Date().toLocaleDateString("de-DE")+'"');
+  L.push("");
+  L.push('"Eingaben"');
+  L.push('"Nr";"Größe";"Wert";"Einheit";"Startwert";"Herkunft"');
+  for(const f of FELDER.slice().sort((a,b)=>a.nr-b.nr))
+    L.push([f.nr,'"'+z(f.t)+'"','"'+nf(hol(f),f.f)+'"','"'+z(f.e)+'"','"'+nf(startwert(f),f.f)+'"','"'+z(f.q)+'"'].join(";"));
+  L.push("");
+  L.push('"Ergebnis"');
+  L.push('"Alter heute";"'+P.alter+'"');
+  L.push('"Jahre bis zum Ruhestand";"'+Math.round(P.jahre)+'"');
+  L.push('"Nötige Wertsteigerung je Jahr in Prozent";"'+(sw.lage==="ok"?nf(sw.wert,2):(sw.lage==="unter"?"keine":"über 25"))+'"');
+  L.push('"Kaufpreis";"'+num(r.kaufpreis)+'"');
+  L.push('"Kaufnebenkosten";"'+num(r.nk)+'"');
+  L.push('"Kredit";"'+num(r.kredit)+'"');
+  L.push('"Vermögen beim Kaufen am Ende";"'+num(r.ende.kaeufer)+'"');
+  L.push('"Vermögen beim Mieten und Sparen am Ende";"'+num(r.ende.mieter)+'"');
+  L.push('"Kaufen minus mieten";"'+num(r.ende.kaeufer-r.ende.mieter)+'"');
+  L.push('"Angaben nominal, in Euro des jeweiligen Jahres"');
+  L.push("");
+  L.push('"Jahresreihe"');
+  L.push(['"Jahr"','"Zinszahlung"','"Tilgung"','"Laufende Kosten"','"Sanierung"','"Wohnkosten gesamt"','"Miete"',
+          '"Restschuld"','"Wohnwert"','"Vermögen Kaufen"','"Depot vor Steuer"','"Vermögen Mieten"',
+          '"Kaufen minus mieten"'].join(";"));
+  for(const a of r.reihe)
+    L.push([a.j,num(a.zinsJ),num(a.tilg),num(a.neben),num(a.san),num(a.ausgaben),num(a.miete),num(a.rest),
+            num(a.wert),num(a.kaeufer),num(a.depot),num(a.mieter),num(a.kaeufer-a.mieter)]
+           .map((v,i)=>i===0?v:'"'+v+'"').join(";"));
+  return L.join("\r\n");
+}
+/* Excel ohne Fremdcode: ein kleiner ZIP-Schreiber baut die .xlsx selbst. */
+const CRCTAB=(()=>{const t=new Uint32Array(256);
+  for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0;}
+  return t;})();
+function crc32(buf){let c=0xFFFFFFFF;for(let i=0;i<buf.length;i++)c=CRCTAB[(c^buf[i])&0xFF]^(c>>>8);
+  return (c^0xFFFFFFFF)>>>0;}
+function zipBauen(dateien){
+  const enc=new TextEncoder(), teile=[], zentral=[];
+  let versatz=0;
+  const u16=v=>[v&255,(v>>8)&255];
+  const u32=v=>[v&255,(v>>8)&255,(v>>16)&255,(v>>24)&255];
+  for(const d of dateien){
+    const name=enc.encode(d.name), daten=enc.encode(d.text), crc=crc32(daten);
+    const kopf=[].concat([80,75,3,4],u16(20),u16(0),u16(0),u16(0),u16(0),u32(crc),
+      u32(daten.length),u32(daten.length),u16(name.length),u16(0));
+    teile.push(new Uint8Array(kopf), name, daten);
+    zentral.push({name, crc, laenge:daten.length, versatz});
+    versatz += kopf.length+name.length+daten.length;
+  }
+  const zStart=versatz; const zTeile=[];
+  for(const z of zentral){
+    const kopf=[].concat([80,75,1,2],u16(20),u16(20),u16(0),u16(0),u16(0),u16(0),u32(z.crc),
+      u32(z.laenge),u32(z.laenge),u16(z.name.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(z.versatz));
+    zTeile.push(new Uint8Array(kopf), z.name);
+    versatz += kopf.length+z.name.length;
+  }
+  const ende=new Uint8Array([].concat([80,75,5,6],u16(0),u16(0),u16(zentral.length),u16(zentral.length),
+    u32(versatz-zStart),u32(zStart),u16(0)));
+  return new Blob(teile.concat(zTeile,[ende]),{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+}
+const xesc = t => String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function spalte(i){let s="";i++;while(i>0){const r=(i-1)%26;s=String.fromCharCode(65+r)+s;i=(i-r-1)/26;}return s;}
+function blatt(zeilen, breiten){
+  let x='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
+    '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">';
+  if(breiten){ x+="<cols>"; breiten.forEach((b,i)=>{x+='<col min="'+(i+1)+'" max="'+(i+1)+'" width="'+b+'" customWidth="1"/>';}); x+="</cols>"; }
+  x+="<sheetData>";
+  zeilen.forEach((z,ri)=>{
+    x+='<row r="'+(ri+1)+'">';
+    z.forEach((w,ci)=>{
+      if(w===null||w===undefined||w==="") return;
+      const ref=spalte(ci)+(ri+1);
+      if(typeof w==="number" && isFinite(w))
+        x+='<c r="'+ref+'"><v>'+(Math.round(w*100)/100)+'</v></c>';
+      else
+        x+='<c r="'+ref+'" t="inlineStr"><is><t xml:space="preserve">'+xesc(w)+'</t></is></c>';
+    });
+    x+="</row>";
+  });
+  return x+"</sheetData></worksheet>";
+}
+function excel(){
+  const r=lauf(P,P.wert), sw=schwelle(P), jahre=Math.round(P.jahre);
+  const vornAb=r.reihe.find(z=>z.kaeufer>=z.mieter);
+  const eck=[["Lohnt sich ein Immobilienkauf?"],
+             ["Rechenstand", new Date().toLocaleDateString("de-DE")],[],
+             ["Eingabe","Wert","Einheit","Startwert","Herkunft"]];
+  for(const f of FELDER.slice().sort((a,b)=>a.nr-b.nr)) eck.push([f.t, hol(f), f.e, startwert(f), f.q]);
+  eck.push([], ["Daraus","Wert","Einheit"],
+    ["Alter heute", P.alter, "Jahre"],
+    ["Laufzeit des Vergleichs", jahre, "Jahre"],
+    ["Kaufpreis", r.kaufpreis, "Euro"],
+    ["Kaufnebenkosten", r.nk, "Euro"],
+    ["Eigener Einsatz", r.einsatz, "Euro"],
+    ["Kredit", r.kredit, "Euro"],
+    ["Wohnkosten im ersten Jahr", r.reihe[0].ausgaben/12, "Euro je Monat"],
+    ["Miete im ersten Jahr", r.reihe[0].miete/12, "Euro je Monat"],
+    ["Kaufpreis, den die Rate traegt", tragbarerPreis(P), "Euro"],
+    [], ["Ergebnis","Wert","Einheit"],
+    ["Vermoegen Kaufen am Ende", r.ende.kaeufer, "Euro"],
+    ["Vermoegen Mieten und Sparen am Ende", r.ende.mieter, "Euro"],
+    ["Kaufen minus mieten", r.ende.kaeufer-r.ende.mieter, "Euro"],
+    ["Der Kauf zahlt sich aus ab Jahr", vornAb?vornAb.j:"gar nicht", ""],
+    ["Noetige Wertsteigerung fuer Gleichstand",
+      sw.lage==="ok"?Math.round(sw.wert*100)/100:(sw.lage==="unter"?"keine noetig":"ueber 25"), "Prozent je Jahr"],
+    ["Restschuld am Ende", r.ende.rest, "Euro"],
+    [], ["Alle Betraege nominal, in Euro des jeweiligen Jahres."]);
+  const reihe=[["Jahr","Zinszahlung","Tilgung","Laufende Kosten","Sanierung","Wohnkosten gesamt",
+                "Miete","Restschuld","Wohnwert","Vermoegen Kaufen","Depot vor Steuer",
+                "Vorabpauschale","Vermoegen Mieten","Kaufen minus mieten"]];
+  for(const a of r.reihe) reihe.push([a.j,a.zinsJ,a.tilg,a.neben,a.san,a.ausgaben,a.miete,a.rest,
+    a.wert,a.kaeufer,a.depot,a.vorabSteuer,a.mieter,a.kaeufer-a.mieter]);
+
+  const dateien=[
+    {name:"[Content_Types].xml", text:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
+      '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'+
+      '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'+
+      '<Default Extension="xml" ContentType="application/xml"/>'+
+      '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'+
+      '<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>'+
+      '<Override PartName="/xl/worksheets/sheet2.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>'+
+      '</Types>'},
+    {name:"_rels/.rels", text:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
+      '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+
+      '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>'+
+      '</Relationships>'},
+    {name:"xl/workbook.xml", text:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
+      '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" '+
+      'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>'+
+      '<sheet name="Eckdaten" sheetId="1" r:id="rId1"/><sheet name="Jahresreihe" sheetId="2" r:id="rId2"/>'+
+      '</sheets></workbook>'},
+    {name:"xl/_rels/workbook.xml.rels", text:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
+      '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+
+      '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>'+
+      '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet2.xml"/>'+
+      '</Relationships>'},
+    {name:"xl/worksheets/sheet1.xml", text:blatt(eck,[40,16,14,14,90])},
+    {name:"xl/worksheets/sheet2.xml", text:blatt(reihe,new Array(14).fill(17))}
+  ];
+  const blob=zipBauen(dateien);
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob); a.download="Immobilienkauf.xlsx";
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},1500);
+  melde("Excel-Datei liegt in deinem Download-Ordner, mit den Blättern Eckdaten und Jahresreihe.");
+}
+
+function herunterladen(){
+  const txt="﻿"+csvText();
+  if(window.claude && window.claude.downloads && window.claude.downloads.save){
+    window.claude.downloads.save({filename:"Immobilienkauf.csv", text:txt, mimeType:"text/csv;charset=utf-8"});
+    melde("Datei liegt in deinem Download-Ordner."); return;
+  }
+  const blob=new Blob([txt],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob); a.download="Immobilienkauf.csv";
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},1500);
+  melde("Datei liegt in deinem Download-Ordner.");
+}
+function kopieren(){
+  const txt=csvText();
+  const fertig=()=>melde("Zahlen kopiert, du kannst sie in Excel einfügen.");
+  if(navigator.clipboard && navigator.clipboard.writeText)
+    navigator.clipboard.writeText(txt).then(fertig,()=>ersatzKopie(txt,fertig));
+  else ersatzKopie(txt,fertig);
+}
+function ersatzKopie(txt,fertig){
+  const ta=document.createElement("textarea");
+  ta.value=txt; ta.style.position="fixed"; ta.style.opacity="0";
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); fertig(); }
+  catch(e){ melde("Kopieren hat nicht geklappt, nimm den Download."); }
+  ta.remove();
+}
+let meldeZeit=null;
+function melde(t){
+  const el=document.getElementById("dlHinweis");
+  el.textContent=t;
+  clearTimeout(meldeZeit);
+  meldeZeit=setTimeout(()=>{el.textContent=
+    "Die CSV passt in jede Tabellenkalkulation, der dritte Knopf legt dieselben Zahlen in die Zwischenablage.";},6000);
+}
+
+/* -------------------------------------------------------------------- Rechnen */
+const JETZT = new Date().getFullYear();
+
+function rechne(){
+  /* Bleibt der Nutzer in seiner Wohnung, hält der Monatsbetrag, nicht der Preis je Quadratmeter. */
+  if(MIETBEZUG==="bleiben" && mieteFix!==null) P.mieteQm = mieteFix/Math.max(1,P.qm);
+
+  /* Alter und Laufzeit folgen aus Geburtsjahr und Ruhestandsalter. */
+  P.alter = Math.max(0, JETZT - Math.round(P.gebJahr));
+  P.jahre = Math.min(60, Math.max(1, Math.round(P.ruhestand) - P.alter));
+
+  /* Gekoppelte Felder nachziehen, bevor gerechnet wird. */
+  for(const f of FELDER) if(f.auto && !f.beruehrt){
+    const v=Math.min(f.max,Math.max(f.min, Math.round(f.auto()/f.s)*f.s));
+    P[f.k]=v;
+    const feld=document.getElementById("n_"+f.k);
+    if(feld && document.activeElement!==feld) feld.value=zeige(f,v);
+    const reg=document.getElementById("r_"+f.k); if(reg) reg.value=v;
+  }
+  const r = lauf(P, P.wert);
+  const e = r.ende;
+  const sw = schwelle(P);
+  const jahre = Math.round(P.jahre);
+  const d0 = defl(jahre);
+  const real = MODUS==="real";
+  const diff = (e.kaeufer-e.mieter)*d0;
+  const monatKauf = r.reihe[0].ausgaben/12;
+  const monatMiete = r.reihe[0].miete/12;
+  const tragPreis = tragbarerPreis(P);
+
+  /* Abgeleitete Felder nachziehen, etwa die Monatsmiete, wenn die Fläche wechselt. */
+  for(const f of FELDER) if(f.virt){
+    const feld=document.getElementById("n_"+f.k);
+    if(document.activeElement!==feld) feld.value=zeige(f,hol(f));
+    document.getElementById("r_"+f.k).value=hol(f);
+  }
+
+  document.getElementById("satzinhalt").innerHTML =
+    "<p>Du hast <b>"+eur(P.ek)+"</b> Eigenkapital und willst <b>"+nf(P.qm)+" m²</b> kaufen, zu <b>"+
+      eur(P.preisQm)+"</b> je Quadratmeter.</p>"+
+    "<p>Das kostet <b>"+eur(r.kaufpreis)+"</b>; was davon Eigenkapital, Nebenkosten und Kredit sind, steht in Schritt 2.</p>"+
+    "<p>Monat für Monat zahlst du <b>"+eur(monatKauf)+"</b>, nämlich Rate und laufende Kosten. "+
+      "Dieselbe Wohnung zur Miete kostet <b>"+eur(MIETE.get())+"</b>.</p>"+
+    "<p>Der Vergleich läuft <b>"+jahre+" Jahre</b>, von heute bis <b>"+(JETZT+jahre)+
+      "</b>, dem Jahr, in dem du mit "+Math.round(P.ruhestand)+" aufhörst zu arbeiten.</p>";
+
+  const u=document.getElementById("urteil");
+  const knapp = Math.abs(diff) < Math.max(e.kaeufer*d0, e.mieter*d0)*0.03;
+  u.textContent = knapp
+    ? "Beide Wege kommen fast aufs Gleiche heraus."
+    : (diff>=0 ? "Mit diesen Zahlen solltest du eher kaufen."
+               : "Mit diesen Zahlen solltest du eher mieten und anlegen.");
+  const groesser = Math.max(Math.abs(e.kaeufer*d0), Math.abs(e.mieter*d0));
+  const anteilDiff = groesser>0 ? Math.abs(diff)/groesser*100 : 0;
+  const proJahr = Math.abs(diff)/Math.max(1,jahre);
+  document.getElementById("urteilsatz").innerHTML =
+    "Unter diesen Annahmen hast du nach <b>"+jahre+" Jahren</b>, also "+(JETZT+jahre)+", mit "+
+    (diff>=0 ? "<b>kaufen rund "+rund(diff)+" mehr</b> Vermögen als mit mieten und anlegen"
+             : "<b>mieten und anlegen rund "+rund(-diff)+" mehr</b> Vermögen als mit kaufen")+
+    ". Gemeint ist der Unterschied am Schluss, nicht pro Jahr; auf die Laufzeit verteilt sind es rund "+
+    rund(proJahr)+" im Jahr. Mit kaufen besitzt du dann rund <b>"+rund(e.kaeufer*d0)+
+    "</b>, mit mieten und anlegen rund <b>"+rund(e.mieter*d0)+"</b>"+(real?", in heutigem Geld":"")+
+    ". Gerechnet ist das mit "+nf(P.wert,1)+" % Wertsteigerung im Jahr und "+nf(P.depot,1)+" % Depotrendite.";
+
+  const nebenMonat = r.reihe[0].neben/12;
+  const vornAb = r.reihe.find(z=>z.kaeufer>=z.mieter);
+  const wertEnde = e.wert*d0;
+  const pufferRoh = Math.abs(diff)/Math.max(0.01,1-P.verkauf/100);
+  const puffer = wertEnde>0 ? (diff>=0?1:-1)*pufferRoh/wertEnde*100 : 0;
+  const pufferGreifbar = Math.abs(puffer) <= 50;
+
+  let kippWert, kippKlein;
+  if(!vornAb){ kippWert = "gar nicht"; kippKlein = "in diesen "+jahre+" Jahren bringt mieten und anlegen in jedem Jahr mehr"; }
+  else if(vornAb.j===1){ kippWert = "sofort"; kippKlein = "schon nach einem Jahr bringt Kaufen mehr, und das bleibt so"; }
+  else { kippWert = "ab Jahr "+vornAb.j; kippKlein = "also "+(JETZT+vornAb.j)+"; wer vorher verkauft, hätte mit mieten und anlegen mehr"; }
+
+  document.getElementById("vier").innerHTML =
+    '<div><dt>Kaufen kostet im ersten Jahr</dt><dd>'+eur(monatKauf)+' im Monat'+
+      '<small>Rate '+eur(P.rateMon)+' plus '+eur(nebenMonat)+' laufende Kosten; Heizung und Betriebskosten sind nicht dabei, die zahlen beide Wege</small></dd></div>'+
+    '<div><dt>Dieselbe Wohnung zur Miete</dt><dd>'+eur(monatMiete)+' im Monat'+
+      '<small>'+(monatKauf>=monatMiete
+        ? eur(monatKauf-monatMiete)+" weniger als Kaufen; genau diese Differenz legt der zweite Weg jeden Monat an"
+        : eur(monatMiete-monatKauf)+" mehr als Kaufen; diese Differenz nimmt der zweite Weg jeden Monat aus dem Depot")+
+      '</small></dd></div>'+
+    '<div><dt>Kaufpreis, den deine Rate trägt</dt><dd>'+rund(tragPreis)+''+
+      '<small>rechnerisch, weil bis zum Ruhestand abbezahlt; das wären rund '+nf(tragPreis/Math.max(1,P.preisQm),0)+' m², deine Wohnung kostet '+
+      eur(r.kaufpreis)+', also '+eur(Math.abs(r.kaufpreis-tragPreis))+(r.kaufpreis>tragPreis?" mehr":" weniger")+
+      '</small></dd></div>'+
+    '<div class="kipp"><dt>Der Kauf zahlt sich aus</dt><dd>'+kippWert+
+      '<small>'+kippKlein+'</small></dd></div>';
+
+  document.getElementById("schwelltext").textContent =
+    (pufferGreifbar
+      ? (puffer>=0
+          ? "Am Ende dürfte die Wohnung rund "+rund(pufferRoh)+" weniger wert sein, das sind "+nf(Math.abs(puffer),1)+
+            " % ihres Werts von rund "+rund(wertEnde)+", bevor dieser Vorteil aufgebraucht ist. "
+          : "Am Ende fehlen der Wohnung rund "+rund(pufferRoh)+" an Wert, das sind "+nf(Math.abs(puffer),1)+
+            " % ihres Werts von rund "+rund(wertEnde)+". ")
+      : "") +
+    (sw.lage==="ok"
+      ? "Gleich viel Vermögen hättest du auf beiden Wegen, wenn die Wohnung jedes Jahr um "+nf(sw.wert,1)+
+        " % teurer würde; du rechnest mit "+nf(P.wert,1)+" % im Jahr."
+      : (sw.lage==="unter" ? "Selbst wenn die Preise fielen, ginge der Kauf unter diesen Annahmen auf."
+                           : "Selbst 25 % Wertsteigerung im Jahr reichten unter diesen Annahmen nicht."));
+
+  document.getElementById("modusText").textContent = real
+    ? "So liest du das: Alle Beträge sind in heutiges Geld umgerechnet, bei "+nf(P.infl,1)+
+      " % Inflation im Jahr. Was hier steht, kannst du mit heutigen Preisen vergleichen. Diese Ansicht ist die ehrlichere."
+    : "So liest du das: Alle Beträge sind Euro des jeweiligen Jahres. Die Zahlen sehen größer aus, kaufen in Jahrzehnten aber weniger. Zum Vergleich mit heutigen Preisen lieber zurückschalten.";
+
+  const setLive=(k,t)=>{const el=document.getElementById("live_"+k); if(el) el.textContent=t;};
+  setLive("ek", "Davon gehen "+eur(Math.min(r.einsatz,r.vorab))+" für Nebenkosten und Renovierung weg, "+
+    eur(Math.max(0,r.einsatz-r.vorab))+" bleiben als Anzahlung.");
+  setLive("mieteMon", MIETBEZUG==="bleiben"
+    ? "Fester Betrag: Änderst du die Fläche, bleibt diese Miete stehen."
+    : "Marktmiete: Änderst du die Fläche, wächst dieser Betrag mit, derzeit "+nf(P.mieteQm,2)+" € je Quadratmeter.");
+  document.getElementById("mietText").textContent = MIETBEZUG==="bleiben"
+    ? "Du vergleichst Kaufen mit dem Verbleib in deiner jetzigen Wohnung. Trag deine echte Kaltmiete ein, auch wenn sie günstig ist."
+    : "Du vergleichst Kaufen mit dem Neuanmieten einer vergleichbaren Wohnung. Trag die Marktmiete ein.";
+  setLive("nkPct", "Das sind "+eur(r.nk)+" einmalig, zusätzlich zum Kaufpreis von "+eur(r.kaufpreis)+".");
+  setLive("verkauf", "Beim Verkauf nach "+jahre+" Jahren gingen davon "+eur(e.wert*P.verkauf/100*d0)+" ab.");
+  setLive("nebenMon", "Das sind "+eur(P.nebenMon*12)+" im Jahr, also "+
+    nf(P.nebenMon*12/Math.max(1,r.kaufpreis)*100,2)+" % des Kaufpreises.");
+  const lj=document.getElementById("live_ruhestand");
+  if(lj) lj.textContent = "Du bist "+P.alter+" und hast noch "+jahre+" Jahre bis dahin. So lange läuft der Vergleich, er endet "+(JETZT+jahre)+"."; 
+
+  const bind=Math.round(P.bindung);
+  const restBind = bind<jahre && r.reihe[bind-1] ? r.reihe[bind-1].rest : null;
+  const zinsAnteil = r.reihe[0].zinsJ/Math.max(1,r.reihe[0].zinsJ+r.reihe[0].tilg);
+  const kz=[
+    ["Kaufnebenkosten", eur(r.nk), nf(P.nkPct,1)+" % des Kaufpreises von "+eur(r.kaufpreis)+", einmalig und sofort weg"],
+    ["Davon trägt dein Eigenkapital", eur(Math.min(r.einsatz,r.vorab)),
+      "der Rest deines Eigenkapitals, "+eur(Math.max(0,r.einsatz-r.vorab))+", geht als Anzahlung in die Wohnung"],
+    ["Kredit", eur(r.kredit), r.kredit>0
+      ? nf(r.kredit/Math.max(1,r.kaufpreis)*100,0)+" % des Kaufpreises, Rate "+eur(P.rateMon)+" im Monat"
+      : "kein Kredit nötig"],
+    ["Zins im ersten Jahr", eur(r.reihe[0].zinsJ),
+      "von der Jahresrate über "+eur(r.annu)+" sind das "+nf(zinsAnteil*100,0)+" %, der Rest tilgt"],
+    ["Schuldenfrei", r.kredit<=0?"sofort":(r.schuldenfrei?("in Jahr "+r.schuldenfrei+", also "+(JETZT+r.schuldenfrei)):("nicht in diesen "+jahre+" Jahren")),
+      r.kredit>0&&!r.schuldenfrei?("am Ende bleiben "+eur(e.rest)+" offen"):""],
+    ["Restschuld beim Anschluss", restBind!==null?eur(restBind):"keine",
+      restBind!==null?(nf(restBind/Math.max(1,r.kredit)*100,0)+" % des Kredits, die Bindung endet nach Jahr "+bind+
+        ", danach "+nf(P.zins2,1)+" % Zins"):"die Bindung reicht über die ganze Laufzeit"]
+  ];
+  document.getElementById("kz").innerHTML = kz.map(([t,v,u2])=>
+    '<dt>'+t+'</dt><dd>'+v+(u2?'<small>'+u2+'</small>':'')+'</dd>').join("");
+  document.getElementById("kreditKurz").textContent =
+    r.kredit>0 ? eur(r.kredit)+" Kredit, "+(r.schuldenfrei?("schuldenfrei in Jahr "+r.schuldenfrei):"Restschuld am Ende")
+               : "kein Kredit nötig";
+
+  const warn=[];
+  if(Math.round(P.ruhestand)-P.alter < 1) warn.push("Dein Ruhestandsalter liegt nicht mehr vor dir. Der Rechner vergleicht ersatzweise ein einziges Jahr.");
+  if(r.unterdeckt) warn.push("Ab Jahr "+r.unterdecktJahr+" deckt deine Rate von "+eur(P.rateMon)+" im Monat den Zins von "+
+    eur(r.unterdecktZins/12)+" im Monat nicht mehr. Von da an tilgst du nichts, die Schuld bleibt stehen.");
+  if(r.ekKnapp) warn.push("Dein Eigenkapital von "+eur(P.ek)+" deckt nicht einmal die "+eur(r.vorab)+" für Nebenkosten und Renovierung. Die Bank müsste den Rest mitfinanzieren, und das tun die wenigsten.");
+  if(r.ueberschuss>0) warn.push("Von deinem Eigenkapital über "+eur(P.ek)+" bleiben "+eur(r.ueberschuss)+" übrig, weil Kaufpreis und Nebenkosten zusammen nur "+eur(r.kaufpreis+r.vorab)+" ausmachen. Die Rechnung lässt den Rest weg, weil er auf beiden Wegen gleich angelegt würde.");
+
+  if(P.sanierung>0 && Math.round(P.sanJahr)>jahre) warn.push("Die große Sanierung über "+eur(P.sanierung)+" liegt in Jahr "+Math.round(P.sanJahr)+" und damit hinter deinen "+jahre+" Jahren. Sie taucht in der Rechnung nicht auf.");
+  if(P.zins2>P.zins+1.5 && restBind) warn.push("Ab Jahr "+(bind+1)+" gilt der Anschlusszins von "+nf(P.zins2,1)+" % statt "+nf(P.zins,1)+" %. Die Rate bleibt gleich, also tilgst du von da an langsamer.");
+  document.getElementById("warnbox").innerHTML = warn.slice(0,2).map(w=>'<p class="warnung">'+w+"</p>").join("");
+
+  /* Weicher Hinweis statt Warnung: Restschuld am Ende, mit Vorschlag zum Antippen. */
+  const hb=document.getElementById("hinweisbox");
+  if(r.kredit>0 && !r.schuldenfrei && !r.unterdeckt){
+    const vorschlag = tilgendeRate(P);
+    hb.innerHTML = '<p class="hinweis">Mit '+eur(P.rateMon)+' im Monat bleiben zum Ruhestand <b>'+eur(e.rest)+
+      '</b> Restschuld übrig, das sind '+nf(e.rest/Math.max(1,r.kredit)*100,0)+
+      ' % des Kredits von '+eur(r.kredit)+'. Das ist kein Fehler, nur eine längere Laufzeit.'+
+      (vorschlag && vorschlag<=6000
+        ? ' Bis dahin schuldenfrei wärst du mit <b>'+eur(vorschlag)+'</b> im Monat.'+
+          '<button type="button" id="rateUebernehmen">Diese Rate nehmen</button>'
+        : '')+'</p>';
+    const kn=document.getElementById("rateUebernehmen");
+    if(kn) kn.addEventListener("click",()=>{
+      const rf=FELDER.find(x=>x.k==="rateMon"); rf.beruehrt=true; setze(rf, vorschlag);
+    });
+  } else if(r.kaufpreis > tragPreis*1.02 && !r.unterdeckt){
+    hb.innerHTML = '<p class="hinweis">Deine Rate von '+eur(P.rateMon)+' im Monat trägt einen Kaufpreis von rund <b>'+
+      eur(tragPreis)+'</b>, die Wohnung kostet <b>'+eur(r.kaufpreis)+'</b>, also '+eur(r.kaufpreis-tragPreis)+
+      ' mehr. Das geht, dauert aber über den Ruhestand hinaus.</p>';
+  } else hb.innerHTML="";
+
+  /* Matrix über beide Unbekannten: Zeilen Wertsteigerung, Spalten Depotrendite.
+     Wo das Vorzeichen wechselt, steht die rote Linie, wie die Nulllinie im Diagramm. */
+  const wertStufen = [0,1,2,3,4,5];
+  const depotStufen = [3,4,5,6,7];
+  const werte = wertStufen.map(w => depotStufen.map(dp => {
+    const z = lauf(P, w, dp).ende; return (z.kaeufer-z.mieter)*d0;
+  }));
+  const beispiel = werte[4][2];
+  document.getElementById("szenUnter").textContent =
+    "Jede Zelle sagt, wie viel Kaufen am Ende mehr oder weniger bringt als mieten und anlegen, "+
+    (real?"in heutigem Geld":"in Euro von morgen")+". So liest du sie: Steigt die Wohnung um 4,0 % im Jahr "+
+    "und bringt das Depot 5,0 %, "+(beispiel>=0
+      ? "hast du mit kaufen am Ende rund "+rund(beispiel)+" mehr."
+      : "hast du mit kaufen am Ende rund "+rund(-beispiel)+" weniger.");
+  const kopf = document.getElementById("szen").querySelector("thead tr:nth-child(2)");
+  kopf.innerHTML = '<th class="ecke"></th>'+
+    depotStufen.map(dp=>'<th class="szenkopf">'+nf(dp,1)+' %</th>').join("");
+  document.getElementById("szen").querySelector("tbody").innerHTML = wertStufen.map((w,zi)=>{
+    const zellen = depotStufen.map((dp,si)=>{
+      const dd = werte[zi][si];
+      const aktiv = (Math.abs(w-P.wert)<0.05 && Math.abs(dp-P.depot)<0.05) ? " aktiv" : "";
+      const links = si>0 && (werte[zi][si-1]>=0) !== (dd>=0) ? " grenzeL" : "";
+      const oben  = zi>0 && (werte[zi-1][si]>=0) !== (dd>=0) ? " grenzeO" : "";
+      return '<td class="szenzelle'+aktiv+links+oben+' '+(dd>=0?"vor":"zurueck")+'" data-w="'+w+'" data-d="'+dp+
+             '" tabindex="0">'+(dd>=0?"+":"−")+kurz(Math.abs(dd))+'</td>';
+    }).join("");
+    return '<tr><th scope="row">'+nf(w,1)+' %</th>'+zellen+'</tr>';
+  }).join("");
+
+  /* Jahr und Werteanteil erscheinen erst, wenn überhaupt ein Betrag eingetragen ist. */
+  const renoAktiv = P.renoStart>0 || P.sanierung>0;
+  for(const k of ["sanJahr","renoWert"]){
+    const feld=document.getElementById("n_"+k);
+    if(feld){ const reg=feld.closest(".reg"); if(reg) reg.hidden = !renoAktiv; }
+  }
+
+  const zaehl = g => FELDER.filter(f=>f.g===g && Math.abs(hol(f)-startwert(f))>=f.s/2).length;
+  for(const f of FELDER){
+    const kn=document.getElementById("s_"+f.k);
+    const anders = Math.abs(hol(f)-startwert(f)) >= f.s/2;
+    kn.disabled = !anders;
+    kn.textContent = (anders?"Zurück auf ":"Startwert ")+zeige(f,startwert(f))+(f.e?" "+f.e:"");
+  }
+  const kurztext = (g, standard) => { const n=zaehl(g); return n ? n+(n===1?" Wert geändert":" Werte geändert") : standard; };
+  const nReno = zaehl("reno")+zaehl("steigerung");
+  document.getElementById("weitereKurz").textContent = nReno
+    ? nReno+(nReno===1?" Wert geändert":" Werte geändert")
+    : "keine Renovierung, Miete +"+nf(P.mietSteig,1)+" %, Kosten +"+nf(P.nebenSteig,1)+" % im Jahr";
+  document.getElementById("geldKurz").textContent =
+    kurztext("geldwert", "Inflation "+nf(P.infl,1)+" % im Jahr, Vorabpauschale "+nf(P.basiszins,1)+" %");
+}
+
+document.getElementById("allesneu").addEventListener("click",allesZurueck);
+document.getElementById("allesneu2").addEventListener("click",allesZurueck);
+document.getElementById("mNom").addEventListener("click",()=>setzeModus("nominal"));
+function setzeMietbezug(m){
+  MIETBEZUG=m;
+  mieteFix = (m==="bleiben") ? MIETE.get() : null;
+  document.getElementById("mietNeu").setAttribute("aria-pressed", m==="neu");
+  document.getElementById("mietBleiben").setAttribute("aria-pressed", m==="bleiben");
+  rechne();
+}
+document.getElementById("mietNeu").addEventListener("click",()=>setzeMietbezug("neu"));
+document.getElementById("mietBleiben").addEventListener("click",()=>setzeMietbezug("bleiben"));
+document.getElementById("mReal").addEventListener("click",()=>setzeModus("real"));
+document.getElementById("dlCsv").addEventListener("click",herunterladen);
+document.getElementById("dlXlsx").addEventListener("click",excel);
+document.getElementById("kopieren").addEventListener("click",kopieren);
+const wertFeld = FELDER.find(f=>f.k==="wert");
+const depotFeld = FELDER.find(f=>f.k==="depot");
+function setzeZelle(td){
+  wertFeld.beruehrt=true; depotFeld.beruehrt=true;
+  leg(depotFeld, +td.dataset.d);
+  document.getElementById("r_depot").value=+td.dataset.d;
+  document.getElementById("n_depot").value=zeige(depotFeld,+td.dataset.d);
+  setze(wertFeld, +td.dataset.w);
+}
+document.getElementById("szen").addEventListener("click",ev=>{
+  const td=ev.target.closest("td[data-w]"); if(td) setzeZelle(td);
+});
+document.getElementById("szen").addEventListener("keydown",ev=>{
+  if(ev.key!=="Enter"&&ev.key!==" ") return;
+  const td=ev.target.closest("td[data-w]"); if(td){ ev.preventDefault(); setzeZelle(td); }
+});
+document.getElementById("form").addEventListener("submit",ev=>ev.preventDefault());
+let nachMessen=null;
+window.addEventListener("resize",()=>{clearTimeout(nachMessen); nachMessen=setTimeout(rechne,200);});
+
+function los(){ baue(); rechne(); standZeigen(); }
+startwerteLaden().then(los, los);
+</script>
+
+</body>
+</html>

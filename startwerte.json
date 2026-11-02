@@ -1,0 +1,67 @@
+{
+  "stand": "2026-11-02",
+  "hinweis": "Diese Datei setzt die Startwerte des Rechners. Werte, die hier fehlen, bleiben auf dem im HTML eingebauten Stand.",
+  "werte": {
+    "zins": 4.2,
+    "zins2": 4.2,
+    "preisQm": 5929,
+    "mieteQm": 15.78,
+    "infl": 2.0,
+    "nebenSteig": 2.0,
+    "basiszins": 2.5,
+    "wert": 3.0,
+    "depot": 5.0
+  },
+  "herkunft": {
+    "zins": "Startwert 4,2 %: Durchschnitt der deutschen Banken für Wohnungsbaukredite mit über zehn Jahren Zinsbindung, MFI-Zinsstatistik der Deutschen Bundesbank, Stand 09.2026.",
+    "zins2": "Startwert 4,2 %: wie der erste Zins, der Rechner unterstellt also von sich aus keine Wende.",
+    "preisQm": "Startwert 5.929 €: Berliner Altbau im Mittel, IBB Wohnungsmarktbericht 2025.",
+    "mieteQm": "Startwert 15,78 € je Quadratmeter: Berliner Angebotsmiete, IBB Wohnungsmarktbericht 2025.",
+    "infl": "Startwert 2,0 %: das Inflationsziel der EZB.",
+    "basiszins": "Startwert 2,5 %: Größenordnung des Basiszinses, den das Bundesfinanzministerium jedes Jahr neu festsetzt.",
+    "wert": "Startwert 3,0 %: ein rundes Mittelszenario, keine Prognose.",
+    "depot": "Startwert 5,0 %: illustratives Ausgangsszenario, keine Prognose; es liegt unter den 6 bis 8 %, die ein breiter Aktienindex langfristig in Euro gebracht hat."
+  },
+  "quellen": [
+    {
+      "feld": "zins",
+      "name": "Bundesbank, MFI-Zinsstatistik",
+      "automatisch": true,
+      "stand": "2026-09",
+      "url": "https://api.statistiken.bundesbank.de/rest/download/BBK01/SUD118?format=csv&lang=de",
+      "pruefen": "Zeitreihe vor dem ersten Lauf im Browser öffnen: Wohnungsbaukredite an private Haushalte, Neugeschäft, anfängliche Zinsbindung über zehn Jahre."
+    },
+    {
+      "feld": "preisQm",
+      "name": "IBB Wohnungsmarktbericht",
+      "automatisch": false,
+      "stand": "2025",
+      "url": "https://www.ibb.de/de/ueber-uns/publikationen/wohnungsmarktbericht.html",
+      "pruefen": "Erscheint als PDF, einmal im Jahr von Hand eintragen."
+    },
+    {
+      "feld": "mieteQm",
+      "name": "IBB Wohnungsmarktbericht",
+      "automatisch": false,
+      "stand": "2025",
+      "url": "https://www.ibb.de/de/ueber-uns/publikationen/wohnungsmarktbericht.html",
+      "pruefen": "Erscheint als PDF, einmal im Jahr von Hand eintragen."
+    },
+    {
+      "feld": "basiszins",
+      "name": "Bundesfinanzministerium, Basiszins",
+      "automatisch": false,
+      "stand": "2026",
+      "url": "https://www.bundesfinanzministerium.de",
+      "pruefen": "Wird jedes Jahr im Januar per Schreiben gesetzt, von Hand eintragen."
+    }
+  ],
+  "beobachtet": {
+    "hpiJahresrate": {
+      "wert": 1.4,
+      "stand": "2026-Q1",
+      "name": "Häuserpreisindex Deutschland, Veränderung zum Vorjahr",
+      "automatisch": true
+    }
+  }
+}

@@ -51,8 +51,8 @@ Kopiere den folgenden Absatz in einen neuen Chat und hänge die Dateien des Pake
    rechts „Run workflow". Danach das Protokoll öffnen und nachsehen, ob dort
    „Bauzins: … %" steht oder „nicht geholt". Im zweiten Fall weiter mit Schritt 6.
 
-6. **Bundesbank-Zeitreihe prüfen.** Die im Skript eingetragene Reihe `SUD118`
-   soll der Effektivzins für Wohnungsbaukredite an private Haushalte im
+6. **Bundesbank-Zeitreihe prüfen.** Die im Skript eingetragene Reihe `SUD119`
+   (Schlüssel `BBIM1.M.DE.B.A2C.P.R.A.2250.EUR.N`) soll der Effektivzins für Wohnungsbaukredite an private Haushalte im
    Neugeschäft mit über zehn Jahren Zinsbindung sein. Öffne die Zeitreihensuche
    der Bundesbank, suche diese Reihe, vergleiche den aktuellen Wert mit dem, was
    das Protokoll ausgibt, und trage bei Abweichung den richtigen Schlüssel in

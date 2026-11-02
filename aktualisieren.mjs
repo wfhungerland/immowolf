@@ -21,17 +21,17 @@ const NUR_ZEIGEN = process.argv.includes("--probe");
 
 /* Bauzins: Effektivzins der deutschen Banken für Wohnungsbaukredite an private
    Haushalte, Neugeschäft, anfängliche Zinsbindung über zehn Jahre.
-   Die Bundesbank gibt jede Zeitreihe als CSV heraus. Stimmt der Schlüssel
-   einmal, bleibt er stabil. */
+   Reihe SUD119, in der Schnittstelle BBIM1.M.DE.B.A2C.P.R.A.2250.EUR.N.
+   Achtung: SUD118 ist die Reihe für fünf bis zehn Jahre. */
 const ZINS_URL =
-  "https://api.statistiken.bundesbank.de/rest/download/BBK01/SUD118?format=csv&lang=de";
+  "https://api.statistiken.bundesbank.de/rest/download/BBIM1/M.DE.B.A2C.P.R.A.2250.EUR.N?format=csv&lang=de";
 
 /* Häuserpreisindex Deutschland, Veränderung zum Vorjahr, aus der frei
    zugänglichen Eurostat-Schnittstelle. Nur zur Anzeige im Text, nicht als
    Startwert für die Wertsteigerung: Vergangenheit ist keine Annahme. */
 const HPI_URL =
   "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hpi_q" +
-  "?format=JSON&lang=DE&geo=DE&unit=RCH_A_AVG&purchase=TOTAL&lastTimePeriod=1";
+  "?format=JSON&lang=DE&geo=DE&unit=RCH_A&purchase=TOTAL&lastTimePeriod=1";
 
 /* ------------------------------------------------------------------ Helfer */
 
@@ -71,6 +71,7 @@ function letzterEurostatWert(daten) {
   return { datum: perioden[perioden.length - 1] ?? "", wert };
 }
 
+let fehlgeschlagen = 0;
 const plausibel = (wert, min, max) => Number.isFinite(wert) && wert >= min && wert <= max;
 const deutsch = x => x.toLocaleString("de-DE", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
@@ -99,6 +100,7 @@ try {
   }
 } catch (fehler) {
   log("Bauzins nicht geholt, alter Wert bleibt stehen:", fehler.message);
+  fehlgeschlagen++;
 }
 
 /* 2. Häuserpreisindex, nur zur Beobachtung */
@@ -115,13 +117,14 @@ try {
   }
 } catch (fehler) {
   log("Häuserpreisindex nicht geholt, alter Wert bleibt stehen:", fehler.message);
+  fehlgeschlagen++;
 }
 
 /* 3. Schreiben */
 const heute = new Date().toISOString().slice(0, 10);
 if (NUR_ZEIGEN) {
   log("\nProbelauf, nichts geschrieben.");
-  process.exit(0);
+  process.exit(fehlgeschlagen ? 1 : 0);
 }
 if (!geaendert) {
   log("Keine Änderung an den Zahlen. Nur das Prüfdatum wird gesetzt.");
@@ -129,3 +132,10 @@ if (!geaendert) {
 datei.stand = heute;
 await writeFile(DATEI, JSON.stringify(datei, null, 2) + "\n", "utf8");
 log("startwerte.json geschrieben, Stand " + heute + ".");
+
+/* Ein gescheiterter Abruf lässt den Lauf rot enden. GitHub schickt dann eine
+   Mail, und der Schritt danach schreibt nichts fest. */
+if (fehlgeschlagen) {
+  log(`${fehlgeschlagen} Abruf(e) gescheitert, Lauf endet mit Fehler.`);
+  process.exitCode = 1;
+}

@@ -28,7 +28,7 @@
       "name": "Bundesbank, MFI-Zinsstatistik",
       "automatisch": true,
       "stand": "2026-09",
-      "url": "https://api.statistiken.bundesbank.de/rest/download/BBK01/SUD118?format=csv&lang=de",
+      "url": "https://api.statistiken.bundesbank.de/rest/download/BBIM1/M.DE.B.A2C.P.R.A.2250.EUR.N?format=csv&lang=de",
       "pruefen": "Zeitreihe vor dem ersten Lauf im Browser öffnen: Wohnungsbaukredite an private Haushalte, Neugeschäft, anfängliche Zinsbindung über zehn Jahre."
     },
     {

@@ -2,8 +2,8 @@
   "stand": "2026-11-02",
   "hinweis": "Diese Datei setzt die Startwerte des Rechners. Werte, die hier fehlen, bleiben auf dem im HTML eingebauten Stand.",
   "werte": {
-    "zins": 4.2,
-    "zins2": 4.2,
+    "zins": 4.1,
+    "zins2": 4.1,
     "preisQm": 5929,
     "mieteQm": 15.78,
     "infl": 2,
@@ -13,8 +13,8 @@
     "depot": 5
   },
   "herkunft": {
-    "zins": "Startwert 4,2 %: Durchschnitt der deutschen Banken für Wohnungsbaukredite mit über zehn Jahren Zinsbindung, MFI-Zinsstatistik der Deutschen Bundesbank, Stand 09.2026.",
-    "zins2": "Startwert 4,2 %: wie der erste Zins, der Rechner unterstellt also von sich aus keine Wende.",
+    "zins": "Startwert 4,1 %: Durchschnitt der deutschen Banken für Wohnungsbaukredite mit über zehn Jahren Zinsbindung, MFI-Zinsstatistik der Deutschen Bundesbank, Stand 2026-09.",
+    "zins2": "Startwert 4,1 %: wie der erste Zins, der Rechner unterstellt also von sich aus keine Wende.",
     "preisQm": "Startwert 5.929 €: Berliner Altbau im Mittel, IBB Wohnungsmarktbericht 2025.",
     "mieteQm": "Startwert 15,78 € je Quadratmeter: Berliner Angebotsmiete, IBB Wohnungsmarktbericht 2025.",
     "infl": "Startwert 2,0 %: das Inflationsziel der EZB.",
@@ -58,8 +58,8 @@
   ],
   "beobachtet": {
     "hpiJahresrate": {
-      "wert": 1.4,
-      "stand": "2026-Q1",
+      "wert": 0.6,
+      "stand": "2026-Q2",
       "name": "Häuserpreisindex Deutschland, Veränderung zum Vorjahr",
       "automatisch": true
     }

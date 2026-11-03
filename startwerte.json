@@ -1,5 +1,5 @@
 {
-  "stand": "2026-11-02",
+  "stand": "2026-11-03",
   "hinweis": "Diese Datei setzt die Startwerte des Rechners. Werte, die hier fehlen, bleiben auf dem im HTML eingebauten Stand.",
   "werte": {
     "zins": 4.1,
